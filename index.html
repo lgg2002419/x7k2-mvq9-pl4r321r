@@ -1,0 +1,2401 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<title>Feliz Cumpleaños ❤</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,500&family=Inter:wght@400;500;600;700;800;900&family=Bebas+Neue&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FBF1E6;
+    --paper-dark:#F3E4D2;
+    --ink:#4A2A2E;
+    --rose:#C6577A;
+    --rose-deep:#9C3F5D;
+    --burgundy:#6B2737;
+    --gold:#C9A227;
+    --skin-her:#C48F68;
+    --skin-him:#D6A876;
+    --hair-her:#241812;
+    --hair-him:#3B2A1E;
+    --dress:#F6EFE4;
+    --shirt:#C9A879;
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  html,body{
+    margin:0; padding:0; width:100%; height:100%;
+    background: radial-gradient(ellipse at top, #F6E3CC 0%, #E9C7B0 45%, #D79A9A 100%);
+    font-family:'Cormorant Garamond', serif;
+    color:var(--ink);
+    overflow:hidden;
+  }
+  #app{
+    position:relative; width:100%; height:100vh; height:100dvh;
+    max-width:520px; margin:0 auto;
+    overflow:hidden;
+    padding-top:env(safe-area-inset-top);
+    padding-bottom:env(safe-area-inset-bottom);
+    background:
+      radial-gradient(circle at 15% 10%, rgba(255,255,255,.5), transparent 40%),
+      linear-gradient(180deg, #FCEFE1 0%, #F4DCC6 55%, #EAC3B8 100%);
+  }
+  .scene{
+    position:absolute; inset:0;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    padding:24px;
+    opacity:0; pointer-events:none;
+    transform:translateY(12px);
+    transition:opacity .5s ease, transform .5s ease;
+    text-align:center;
+  }
+  .scene.active{ opacity:1; pointer-events:auto; transform:translateY(0); }
+
+  h1.script{
+    font-family:'Caveat', cursive;
+    font-size:clamp(34px, 11vw, 52px); font-weight:700;
+    color:var(--burgundy);
+    margin:8px 0 4px 0;
+    text-shadow:0 2px 0 rgba(255,255,255,.4);
+  }
+  p.hint{ font-size:18px; color:var(--rose-deep); letter-spacing:.03em; margin-top:6px; opacity:.85;}
+  .tap-pulse{ animation:pulse 1.8s ease-in-out infinite; }
+  @keyframes pulse{ 0%,100%{opacity:.55;} 50%{opacity:1;} }
+
+  /* ---------- decorative hearts floating ---------- */
+  .floaters{ position:absolute; inset:0; pointer-events:none; overflow:hidden;}
+  .floaters span{
+    position:absolute; bottom:-40px; font-size:18px; color:var(--rose);
+    opacity:.35; animation:rise linear infinite;
+  }
+  @keyframes rise{ to{ transform:translateY(-110vh) rotate(30deg); opacity:0;} }
+
+  /* ---------- character SVG scale wrapper ---------- */
+  .char-wrap{ width:190px; max-width:52vw; }
+  .char-wrap img{ width:100%; height:auto; display:block; }
+  .couple-wrap{ width:180px; max-width:46vw; }
+  .couple-wrap svg{ width:100%; height:auto; display:block; }
+
+  .photo-frame{
+    border-radius:16px; overflow:hidden;
+    border:4px solid var(--paper);
+    box-shadow:0 10px 22px rgba(107,39,55,.28);
+  }
+
+  /* ================= SCENE 1: COVER ================= */
+  #scene-cover .char-wrap{ margin-bottom:6px; filter:drop-shadow(0 10px 18px rgba(107,39,55,.25)); }
+
+  /* ================= SCENE 2: LOCK ================= */
+  #scene-lock{ justify-content:flex-start; padding-top:6vh; }
+  .lock-row{
+    display:flex; align-items:center; justify-content:center; gap:18px;
+    width:100%;
+  }
+  .lock-illustration{ flex:0 0 auto; width:110px; max-width:30vw; }
+  .lock-illustration img{ width:100%; height:auto; display:block; }
+  .keypad-col{ display:flex; flex-direction:column; align-items:center; gap:14px; }
+  .dots{ display:flex; gap:12px; height:26px; }
+  .dots span{ font-size:22px; color:var(--rose-deep); opacity:.25; transition:opacity .2s, transform .2s;}
+  .dots span.filled{ opacity:1; transform:scale(1.15); }
+  .keypad{
+    display:grid; grid-template-columns:repeat(3, 58px); gap:12px;
+  }
+  .key{
+    width:58px; height:58px; position:relative;
+    border:none; background:none; cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Quicksand',sans-serif; font-weight:700; font-size:20px;
+    color:var(--paper);
+  }
+  .key svg{ position:absolute; inset:0; width:100%; height:100%; filter:drop-shadow(0 3px 5px rgba(107,39,55,.35)); transition:transform .12s;}
+  .key:active svg{ transform:scale(.9); }
+  .key span{ position:relative; z-index:1; margin-top:-2px; }
+  .key.ghost{ visibility:hidden; }
+  .keypad-msg{ min-height:28px; font-family:'Quicksand',sans-serif; font-weight:600; font-size:16px; margin-top:6px; color:var(--burgundy); }
+  .keypad-msg.wrong{ color:#9C3F5D; }
+  .keypad-msg.right{ color:#3F7A5C; }
+  .lock-title{ font-family:'Caveat',cursive; font-size:30px; color:var(--burgundy); margin:0 0 10px 0;}
+
+  /* ================= SCENE 3: SPEECH ================= */
+  #scene-speech .bubble{
+    position:relative; background:var(--paper); border:2px solid var(--rose);
+    border-radius:22px; padding:16px 20px; max-width:280px;
+    font-family:'Quicksand',sans-serif; font-weight:600; font-size:17px; color:var(--burgundy);
+    box-shadow:0 8px 18px rgba(107,39,55,.15);
+    margin-bottom:-4px;
+  }
+  .bubble:after{
+    content:""; position:absolute; bottom:-14px; left:50%; transform:translateX(-50%);
+    border-width:14px 10px 0 10px; border-style:solid;
+    border-color:var(--rose) transparent transparent transparent;
+  }
+  .bubble:before{
+    content:""; position:absolute; bottom:-11px; left:50%; transform:translateX(-50%);
+    border-width:12px 8px 0 8px; border-style:solid;
+    border-color:var(--paper) transparent transparent transparent; z-index:1;
+  }
+
+  /* ================= SCENE 4: GIFTS ================= */
+  .gifts-row{ display:flex; gap:22px; justify-content:center; align-items:flex-end; margin-top:18px; }
+  .gift-btn{ background:none; border:none; cursor:pointer; padding:0; width:96px; }
+  .gift-btn svg{ width:100%; filter:drop-shadow(0 8px 14px rgba(107,39,55,.25)); transition:transform .15s; }
+  .gift-btn:active svg{ transform:scale(.94) translateY(2px); }
+  .gift-label{ font-family:'Quicksand',sans-serif; font-size:13px; color:var(--rose-deep); margin-top:6px; opacity:.8;}
+
+  /* ================= OVERLAYS ================= */
+  .overlay{
+    position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center;
+    background:linear-gradient(180deg,#FCEFE1 0%, #F1D9C4 100%);
+    opacity:0; pointer-events:none; transform:scale(.96); transition:opacity .35s ease, transform .35s ease;
+    padding:26px; text-align:center;
+  }
+  .overlay.active{ opacity:1; pointer-events:auto; transform:scale(1); }
+  .back-btn{
+    position:absolute; top:calc(16px + env(safe-area-inset-top)); left:16px; background:var(--paper); border:1.5px solid var(--rose);
+    color:var(--burgundy); border-radius:999px; padding:8px 16px; font-family:'Quicksand',sans-serif;
+    font-weight:600; font-size:14px; cursor:pointer;
+  }
+
+  /* ================= REGALO 1 · LA CARTA ================= */
+  #overlay-letter{
+    background:
+      radial-gradient(circle at 50% 6%, rgba(255,255,255,.6), transparent 46%),
+      radial-gradient(circle at 12% 88%, rgba(198,87,122,.16), transparent 40%),
+      linear-gradient(180deg,#FDF2E6 0%, #F2DCC7 58%, #E9C4B5 100%);
+    justify-content:center;
+  }
+  .letter-ambient{ position:absolute; inset:0; overflow:hidden; pointer-events:none; }
+  .letter-ambient i{
+    position:absolute; bottom:-30px; font-size:13px; color:var(--rose);
+    opacity:.28; animation:rise linear infinite;
+  }
+
+  /* sobre */
+  .envelope{
+    width:232px; max-width:64vw; position:relative; cursor:pointer;
+    filter:drop-shadow(0 16px 26px rgba(107,39,55,.32));
+    animation:envIdle 4s ease-in-out infinite;
+    transition:transform .8s cubic-bezier(.3,.9,.3,1), opacity .7s ease;
+  }
+  .envelope svg{ width:100%; display:block; overflow:visible; }
+  @keyframes envIdle{
+    0%,100%{ transform:translateY(0) rotate(-.7deg); }
+    50%{ transform:translateY(-8px) rotate(.7deg); }
+  }
+  .envelope #flap{ transform-origin:110px 21px; transition:transform .6s cubic-bezier(.4,.1,.3,1); }
+  .envelope .seal{ transition:transform .55s cubic-bezier(.3,1.4,.4,1), opacity .5s ease; transform-origin:110px 78px; }
+  .envelope .seal-shine{ animation:sealShine 2.6s ease-in-out infinite; }
+  @keyframes sealShine{ 0%,100%{opacity:.15} 50%{opacity:.5} }
+  .envelope.opened{ animation:none; }
+  .envelope.opened #flap{ transform:rotateX(178deg); }
+  .envelope.opened .seal{ transform:scale(1.7) rotate(26deg); opacity:0; }
+  .envelope.gone{
+    animation:none; opacity:0; pointer-events:none;
+    transform:translateY(46px) scale(.72) rotate(-5deg);
+  }
+  #envelopeHint{ transition:opacity .4s ease; }
+
+  /* hoja */
+  .letter-paper{
+    position:relative;
+    max-width:336px; width:90%;
+    padding:28px 22px 26px 22px;
+    border-radius:4px;
+    border:1px solid rgba(107,39,55,.16);
+    background:
+      repeating-linear-gradient(180deg, transparent 0 31px, rgba(107,39,55,.055) 31px 32px),
+      linear-gradient(180deg,#FFFCF6 0%, #FBF1E6 62%, #F5E5D2 100%);
+    background-attachment:local, local;
+    font-family:'Cormorant Garamond', serif;
+    font-size:18px; line-height:32px; color:var(--ink);
+    text-align:left;
+    box-shadow:0 20px 44px rgba(107,39,55,.3), inset 0 0 46px rgba(201,162,39,.10);
+    max-height:62vh; overflow-y:auto; -webkit-overflow-scrolling:touch;
+    display:none;
+    opacity:0; transform:translateY(64px) scale(.9) rotate(-1.6deg);
+    transition:opacity .7s ease, transform .9s cubic-bezier(.2,.85,.25,1);
+  }
+  .letter-paper.show{ opacity:1; transform:none; }
+  .letter-title{
+    font-family:'Caveat',cursive; font-size:34px; line-height:1.1;
+    color:var(--burgundy); margin:0;
+  }
+  .letter-rule{ display:block; width:100%; height:12px; margin:2px 0 14px 0; overflow:visible; }
+  .letter-rule path{
+    fill:none; stroke:var(--rose); stroke-width:2; stroke-linecap:round;
+    stroke-dasharray:320; stroke-dashoffset:320;
+  }
+  .letter-paper.show .letter-rule path{ animation:inkDraw 1.3s .45s ease forwards; }
+  @keyframes inkDraw{ to{ stroke-dashoffset:0; } }
+  .letter-paper .lp{ margin:0 0 26px 0; }
+  .letter-paper.show .lp{
+    opacity:0; transform:translateY(12px);
+    animation:lpIn .75s ease forwards;
+    animation-delay:calc(.4s + var(--i) * .16s);
+  }
+  @keyframes lpIn{ to{ opacity:1; transform:none; } }
+  .letter-paper .lp.lead{ font-size:19px; color:var(--burgundy); }
+  .letter-sign{ display:block; width:132px; height:60px; margin:2px auto 0 auto; overflow:visible; }
+  .letter-sign path{
+    fill:none; stroke:var(--burgundy); stroke-width:2.6;
+    stroke-linecap:round; stroke-linejoin:round;
+    stroke-dasharray:340; stroke-dashoffset:340;
+  }
+  .letter-paper.show .letter-sign path{ animation:inkDraw 2.6s 1.9s ease forwards; }
+  .letter-scrollhint{
+    font-family:'Quicksand',sans-serif; font-size:12.5px; color:var(--rose-deep);
+    margin-top:12px; opacity:.8; transition:opacity .35s ease;
+    animation:pulse 2s ease-in-out infinite;
+  }
+  .letter-scrollhint.hide{ opacity:0; }
+
+  /* corazones que salen al abrir cosas */
+  .burst{ position:absolute; inset:0; pointer-events:none; overflow:visible; z-index:5; }
+  .burst i{
+    position:absolute; left:50%; top:50%;
+    font-size:var(--s,16px); color:var(--rose);
+    animation:burstOut 1.2s cubic-bezier(.2,.7,.3,1) forwards;
+  }
+  @keyframes burstOut{
+    0%{ transform:translate(-50%,-50%) scale(.3); opacity:0; }
+    18%{ opacity:1; }
+    100%{ transform:translate(calc(-50% + var(--x)), calc(-50% + var(--y))) scale(1.15) rotate(var(--r)); opacity:0; }
+  }
+
+  /* ================= REGALO 2 · RECUERDOS ================= */
+  #overlay-photos{
+    justify-content:center;
+    padding-top:calc(62px + env(safe-area-inset-top));
+    background:
+      radial-gradient(circle at 82% 6%, rgba(198,87,122,.18), transparent 42%),
+      linear-gradient(180deg,#FCEFE1 0%, #F1D9C4 62%, #E7C2B4 100%);
+  }
+  .photo-hint{
+    font-family:'Quicksand',sans-serif; font-size:13px; color:var(--rose-deep);
+    opacity:.85; margin:2px 0 4px 0;
+  }
+  .photo-grid{
+    display:grid; grid-template-columns:1fr 1fr; gap:18px 14px;
+    max-width:360px; width:96%;
+    overflow-y:auto; max-height:64vh;
+    padding:16px 10px 26px 10px;
+  }
+  .polaroid-wrap{
+    opacity:0; transform:translateY(24px);
+    animation:polaIn .65s cubic-bezier(.2,.9,.25,1) forwards;
+    animation-delay:calc(var(--i) * .1s);
+  }
+  @keyframes polaIn{ to{ opacity:1; transform:none; } }
+  .polaroid{
+    position:relative; display:block; width:100%;
+    background:linear-gradient(180deg,#FFFDF9,#F7EFE4);
+    padding:9px 9px 32px 9px; border-radius:3px;
+    box-shadow:0 12px 22px rgba(107,39,55,.24);
+    border:none; cursor:pointer;
+    transform:rotate(var(--rot,0deg));
+    transition:transform .2s ease, box-shadow .2s ease;
+  }
+  .polaroid:active{ transform:rotate(0deg) scale(1.05); box-shadow:0 18px 30px rgba(107,39,55,.32); }
+  .polaroid .tape{
+    position:absolute; top:-10px; left:50%; width:54px; height:19px;
+    transform:translateX(-50%) rotate(-3deg);
+    background:linear-gradient(180deg, rgba(214,168,118,.5), rgba(214,168,118,.32));
+    border-left:1px dashed rgba(255,255,255,.6);
+    border-right:1px dashed rgba(255,255,255,.6);
+  }
+  .polaroid-img{
+    position:relative; aspect-ratio:1/1; overflow:hidden;
+    background:var(--paper-dark);
+    display:flex; align-items:center; justify-content:center;
+  }
+  .polaroid-img img{
+    width:100%; height:100%; object-fit:cover; display:block;
+    filter:blur(10px) saturate(.35); opacity:.55;
+    animation:develop 1.6s ease forwards;
+    animation-delay:calc(.25s + var(--i) * .1s);
+  }
+  @keyframes develop{ to{ filter:none; opacity:1; } }
+  .polaroid-cap{
+    position:absolute; left:6px; right:6px; bottom:7px;
+    font-family:'Caveat',cursive; font-size:17px; line-height:1.1;
+    color:var(--rose-deep); text-align:center;
+    white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+  }
+  .photo-empty{
+    aspect-ratio:1/1; border-radius:8px;
+    border:2px dashed var(--rose); color:var(--rose-deep);
+    background:rgba(255,255,255,.35);
+    display:flex; align-items:center; justify-content:center; text-align:center;
+    font-family:'Quicksand',sans-serif; font-size:12px; padding:8px;
+  }
+
+  /* visor de fotos */
+  .lightbox{
+    position:fixed; inset:0; z-index:50;
+    background:rgba(26,11,15,.94);
+    -webkit-backdrop-filter:blur(6px); backdrop-filter:blur(6px);
+    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:16px;
+    opacity:0; pointer-events:none; transition:opacity .3s ease;
+    padding:calc(58px + env(safe-area-inset-top)) 16px calc(26px + env(safe-area-inset-bottom));
+  }
+  .lightbox.active{ opacity:1; pointer-events:auto; }
+  .lightbox img{
+    max-width:100%; max-height:66vh; border-radius:8px;
+    box-shadow:0 20px 46px rgba(0,0,0,.6);
+    transform:scale(.9); opacity:0;
+    transition:transform .35s cubic-bezier(.2,.9,.25,1), opacity .3s ease;
+    touch-action:pan-y;
+  }
+  .lightbox.active img{ transform:scale(1); opacity:1; }
+  .lightbox.active img.swap{ transform:scale(.97); opacity:0; }
+  .lb-bar{ display:flex; align-items:center; gap:20px; }
+  .lb-btn{
+    width:44px; height:44px; border-radius:50%;
+    border:1px solid rgba(255,255,255,.26); background:rgba(255,255,255,.1);
+    color:#fff; font-size:17px; cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
+    transition:transform .15s ease, background .2s ease;
+  }
+  .lb-btn:active{ transform:scale(.9); background:rgba(255,255,255,.2); }
+  .lb-count{
+    font-family:'Quicksand',sans-serif; font-size:13px; letter-spacing:.1em;
+    color:rgba(255,255,255,.8); min-width:56px; text-align:center;
+  }
+  .lb-close{
+    position:absolute; top:calc(14px + env(safe-area-inset-top)); right:14px;
+    width:38px; height:38px; border-radius:50%;
+    border:1px solid rgba(255,255,255,.24); background:rgba(255,255,255,.1);
+    color:#fff; font-size:15px; cursor:pointer;
+  }
+
+  /* ==================================================================
+     REGALO 3 · EXPERIENCIA NETFLIX  (todo lo que empieza por .nfx-)
+     ================================================================== */
+  :root{
+    --nfx-red:#E50914;
+    --nfx-red-dark:#B0060F;
+    --nfx-txt:#FFFFFF;
+    --nfx-txt-soft:rgba(255,255,255,.72);
+    --nfx-txt-dim:rgba(255,255,255,.48);
+    --nfx-surface:#181818;
+    --nfx-surface-2:#232323;
+  }
+
+  /* ---- contenedor: ocupa toda la pantalla, negro puro ---- */
+  #overlay-video{
+    display:block;
+    padding:0;
+    background:#000;
+    color:var(--nfx-txt);
+    text-align:left;
+    font-family:'Inter', 'Quicksand', sans-serif;
+    overflow:hidden;
+  }
+  #overlay-video *{ font-family:inherit; }
+
+  .nfx-stage{
+    position:absolute; inset:0;
+    display:flex; flex-direction:column;
+    opacity:0; pointer-events:none;
+    transition:opacity .45s ease;
+  }
+  .nfx-stage.on{ opacity:1; pointer-events:auto; }
+  /* con el regalo cerrado, la capa no debe robar los toques del resto de la web */
+  #overlay-video:not(.active) .nfx-stage,
+  #overlay-video:not(.active) #nfxExit{ pointer-events:none; }
+
+  /* ---- botón salir (siempre disponible) ---- */
+  #nfxExit{
+    position:absolute; z-index:60;
+    top:calc(10px + env(safe-area-inset-top)); right:12px;
+    width:32px; height:32px; border-radius:50%;
+    border:1px solid rgba(255,255,255,.18);
+    background:rgba(0,0,0,.55); backdrop-filter:blur(8px);
+    color:#fff; font-size:15px; line-height:1;
+    display:none; align-items:center; justify-content:center;
+    cursor:pointer;
+  }
+  #nfxExit.on{ display:flex; }
+
+  /* ================= 1. ANIMACIÓN DE INICIO ================= */
+  #nfxIntro{ align-items:center; justify-content:center; background:#000; overflow:hidden; }
+  .nfx-bars{
+    position:absolute; inset:0;
+    display:flex; align-items:center; justify-content:center; gap:5px;
+    opacity:.9;
+  }
+  .nfx-bars i{
+    width:9px; height:0; border-radius:2px;
+    background:linear-gradient(180deg, #FF2A36, var(--nfx-red) 45%, #5E040A);
+    filter:blur(.5px);
+    animation:nfxBar 1.25s cubic-bezier(.16,.84,.24,1) forwards;
+  }
+  @keyframes nfxBar{
+    0%{ height:0; opacity:0; }
+    18%{ opacity:1; }
+    58%{ height:74%; }
+    100%{ height:0; opacity:0; }
+  }
+  .nfx-word{ position:relative; z-index:3; display:flex; }
+  .nfx-word b{
+    font-family:'Bebas Neue', 'Inter', sans-serif;
+    font-weight:400;
+    font-size:clamp(44px, 15vw, 68px);
+    line-height:1;
+    letter-spacing:.02em;
+    color:var(--nfx-red);
+    text-shadow:0 0 26px rgba(229,9,20,.55), 0 0 3px rgba(0,0,0,.6);
+    transform:translateY(24px) scaleY(.35); opacity:0;
+    animation:nfxLetter .55s cubic-bezier(.2,.9,.2,1) forwards;
+  }
+  @keyframes nfxLetter{ to{ transform:none; opacity:1; } }
+  .nfx-word.zoom{ animation:nfxZoom 1.2s ease-in forwards; }
+  @keyframes nfxZoom{
+    0%{ transform:scale(1); opacity:1; filter:brightness(1); }
+    35%{ transform:scale(1.06); filter:brightness(1.35); }
+    100%{ transform:scale(2.4); opacity:0; }
+  }
+  .nfx-glow{
+    position:absolute; inset:0; z-index:2; pointer-events:none;
+    background:radial-gradient(circle at 50% 50%, rgba(255,255,255,.22), transparent 42%);
+    opacity:0;
+  }
+  .nfx-glow.flash{ animation:nfxFlash .75s ease forwards; }
+  @keyframes nfxFlash{ 0%{opacity:0} 25%{opacity:1} 100%{opacity:0} }
+
+  /* ================= 2. INICIO DE SESIÓN ================= */
+  #nfxLogin{
+    justify-content:center; gap:16px; text-align:center;
+    padding:0 26px;
+    background:
+      linear-gradient(180deg, rgba(0,0,0,.35), rgba(0,0,0,.9) 60%, #000 100%),
+      radial-gradient(circle at 50% 0%, rgba(229,9,20,.30), transparent 58%),
+      #000;
+  }
+  .nfx-login-mark{
+    position:absolute; top:calc(18px + env(safe-area-inset-top)); left:20px;
+    font-family:'Bebas Neue', sans-serif; font-size:26px; line-height:1;
+    letter-spacing:.03em; color:var(--nfx-red);
+  }
+  #nfxLogin h2{
+    margin:0; font-size:26px; font-weight:700; letter-spacing:-.01em;
+  }
+  .nfx-field{
+    width:100%; padding:15px 14px;
+    border-radius:5px; border:1px solid rgba(255,255,255,.16);
+    background:rgba(255,255,255,.07);
+    color:#fff; font-size:15px;
+  }
+  .nfx-field::placeholder{ color:var(--nfx-txt-dim); }
+  .nfx-field:focus{ outline:2px solid rgba(255,255,255,.35); outline-offset:1px; }
+  .nfx-btn-red{
+    width:100%; padding:14px;
+    border:none; border-radius:5px;
+    background:var(--nfx-red); color:#fff;
+    font-size:16px; font-weight:700; cursor:pointer;
+    transition:transform .12s ease, background .2s ease;
+  }
+  .nfx-btn-red:active{ transform:scale(.985); background:var(--nfx-red-dark); }
+  .nfx-login-foot{
+    display:flex; align-items:center; justify-content:space-between;
+    width:100%; font-size:12.5px; color:var(--nfx-txt-soft);
+  }
+  .nfx-login-note{ font-size:12.5px; color:var(--nfx-txt-dim); line-height:1.5; margin:2px 0 0 0; }
+
+  /* ================= 3. PERFILES ================= */
+  #nfxProfiles{
+    align-items:center; justify-content:center; gap:26px; padding:26px; text-align:center;
+    background:radial-gradient(circle at 50% 20%, #1a1a1a, #000 70%);
+  }
+  #nfxProfiles h2{ margin:0; font-size:23px; font-weight:600; }
+  .nfx-profiles-row{ display:flex; gap:22px; justify-content:center; flex-wrap:wrap; }
+  .nfx-profile{
+    display:flex; flex-direction:column; align-items:center; gap:9px;
+    background:none; border:none; padding:0; cursor:pointer;
+  }
+  .nfx-avatar{
+    position:relative;
+    width:88px; height:88px; border-radius:6px; overflow:hidden;
+    display:flex; align-items:center; justify-content:center;
+    font-size:34px;
+    border:2px solid transparent;
+    transition:transform .18s ease, border-color .18s ease;
+  }
+  .nfx-avatar img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+  .nfx-profile-name{ font-size:13px; color:var(--nfx-txt-soft); }
+  .nfx-profile.main .nfx-avatar{
+    background:linear-gradient(150deg, #E50914, #7A0610 70%);
+    box-shadow:0 12px 26px rgba(229,9,20,.28);
+    animation:nfxBreathe 3s ease-in-out infinite;
+  }
+  .nfx-profile.main:active .nfx-avatar{ transform:scale(.94); }
+  .nfx-profile.main .nfx-profile-name{ color:#fff; font-weight:600; }
+  @keyframes nfxBreathe{
+    0%,100%{ border-color:rgba(255,255,255,0); }
+    50%{ border-color:rgba(255,255,255,.85); }
+  }
+  .nfx-profile.dim .nfx-avatar{ background:var(--nfx-surface-2); filter:grayscale(1); opacity:.55; }
+  .nfx-profile.dim .nfx-profile-name{ opacity:.55; }
+
+  /* ================= 4. HOME ================= */
+  #nfxHome{ background:#000; }
+  .nfx-top{
+    position:absolute; top:0; left:0; right:0; z-index:10;
+    padding:calc(10px + env(safe-area-inset-top)) 52px 8px 14px;
+    display:flex; flex-direction:column; gap:10px;
+    background:linear-gradient(180deg, rgba(0,0,0,.85) 0%, rgba(0,0,0,.45) 60%, transparent 100%);
+    transition:background .3s ease;
+  }
+  .nfx-top.scrolled{ background:#000; }
+  .nfx-top-row{ display:flex; align-items:center; justify-content:space-between; gap:10px; }
+  .nfx-n{
+    font-family:'Bebas Neue', sans-serif; font-size:30px; line-height:.9;
+    color:var(--nfx-red); letter-spacing:0;
+    text-shadow:0 2px 10px rgba(0,0,0,.6);
+  }
+  .nfx-top-icons{ display:flex; align-items:center; gap:14px; font-size:16px; color:#fff; }
+  .nfx-top-avatar{
+    width:26px; height:26px; border-radius:4px;
+    background:linear-gradient(150deg, #E50914, #7A0610);
+    display:flex; align-items:center; justify-content:center; font-size:13px;
+    overflow:hidden;
+  }
+  .nfx-top-avatar img{ width:100%; height:100%; object-fit:cover; }
+  .nfx-chips{ display:flex; gap:9px; }
+  .nfx-chip{
+    padding:5px 13px; border-radius:999px;
+    border:1px solid rgba(255,255,255,.5);
+    background:rgba(0,0,0,.35);
+    font-size:12.5px; color:#fff; white-space:nowrap;
+  }
+  .nfx-chip.active{ background:rgba(255,255,255,.92); color:#000; border-color:transparent; font-weight:600; }
+
+  .nfx-feed{
+    flex:1; overflow-y:auto; overflow-x:hidden;
+    -webkit-overflow-scrolling:touch;
+    padding-bottom:calc(74px + env(safe-area-inset-bottom));
+  }
+
+  /* --- hero --- */
+  .nfx-hero{
+    position:relative;
+    min-height:64vh;
+    display:flex; flex-direction:column; justify-content:flex-end;
+    align-items:center; text-align:center;
+    padding:0 18px 14px 18px;
+    overflow:hidden;
+  }
+  .nfx-hero-bg{
+    position:absolute; inset:0;
+    background:linear-gradient(150deg, #3B0A12, #12060A 55%, #000);
+    animation:nfxKen 18s ease-in-out infinite alternate;
+  }
+  .nfx-hero-bg img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .nfx-hero-bg:not(.has-img)::after{
+    content:"";
+    position:absolute; inset:0;
+    background:
+      radial-gradient(circle at 50% 32%, rgba(229,9,20,.42), transparent 46%),
+      radial-gradient(circle at 18% 76%, rgba(229,9,20,.18), transparent 34%),
+      radial-gradient(circle at 82% 18%, rgba(255,255,255,.07), transparent 30%);
+  }
+  @keyframes nfxKen{ from{ transform:scale(1); } to{ transform:scale(1.09); } }
+  .nfx-hero-fade{
+    position:absolute; inset:0;
+    background:
+      linear-gradient(180deg, rgba(0,0,0,.72) 0%, rgba(0,0,0,.05) 34%, rgba(0,0,0,.55) 72%, #000 100%),
+      linear-gradient(90deg, rgba(0,0,0,.35), transparent 45%, rgba(0,0,0,.35));
+  }
+  .nfx-hero-inner{ position:relative; z-index:2; width:100%; display:grid; gap:10px; justify-items:center; }
+  .nfx-hero-logo{ max-width:76%; display:block; margin:0 auto; }
+  .nfx-hero-title{
+    font-family:'Bebas Neue', sans-serif;
+    font-size:clamp(34px, 10.5vw, 46px); line-height:.92;
+    letter-spacing:.01em; margin:0; color:#fff;
+    text-shadow:0 4px 22px rgba(0,0,0,.75);
+  }
+  .nfx-hero-tags{
+    display:flex; align-items:center; justify-content:center; flex-wrap:wrap;
+    gap:7px; font-size:12.5px; color:var(--nfx-txt-soft);
+  }
+  .nfx-hero-tags i{ font-style:normal; color:var(--nfx-txt-dim); }
+  .nfx-hero-btns{
+    display:flex; align-items:center; justify-content:center; gap:22px;
+    margin-top:4px; width:100%;
+  }
+  .nfx-play{
+    display:flex; align-items:center; gap:7px;
+    padding:10px 26px; border:none; border-radius:4px;
+    background:#fff; color:#000; font-size:15px; font-weight:700; cursor:pointer;
+    transition:transform .12s ease, box-shadow .25s ease;
+    box-shadow:0 6px 18px rgba(255,255,255,.14);
+  }
+  .nfx-play:active{ transform:scale(.96); }
+  .nfx-mini{
+    display:flex; flex-direction:column; align-items:center; gap:3px;
+    background:none; border:none; color:#fff; cursor:pointer;
+    font-size:11px; opacity:.9;
+  }
+  .nfx-mini b{ font-size:18px; font-weight:400; line-height:1; }
+  .nfx-mini:active{ opacity:.55; }
+
+  /* --- filas horizontales --- */
+  .nfx-row{ margin-top:20px; }
+  .nfx-row-head{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:0 14px; margin-bottom:8px;
+  }
+  .nfx-row-head h3{
+    margin:0; font-size:15.5px; font-weight:700; letter-spacing:-.01em; color:#fff;
+  }
+  .nfx-rail{
+    display:flex; gap:8px;
+    padding:2px 14px 4px 14px;
+    overflow-x:auto; overflow-y:hidden;
+    -webkit-overflow-scrolling:touch;
+    scrollbar-width:none;
+  }
+  .nfx-rail::-webkit-scrollbar{ display:none; }
+  .nfx-card{
+    position:relative; flex:0 0 auto;
+    width:104px;
+    background:none; border:none; padding:0; cursor:pointer;
+    text-align:left;
+    transition:transform .18s ease;
+  }
+  .nfx-card:active{ transform:scale(.95); }
+  .nfx-poster{
+    position:relative; width:100%; aspect-ratio:2/3;
+    border-radius:5px; overflow:hidden;
+    background:var(--g, linear-gradient(150deg,#333,#111));
+    box-shadow:0 8px 18px rgba(0,0,0,.45);
+    display:flex; align-items:flex-end;
+  }
+  .nfx-poster img{
+    position:absolute; inset:0; width:100%; height:100%;
+    object-fit:cover; display:block;
+  }
+  .nfx-poster-fallback{
+    position:relative; z-index:1;
+    padding:8px; width:100%;
+    font-family:'Bebas Neue', sans-serif;
+    font-size:16px; line-height:1.02; letter-spacing:.01em;
+    color:#fff; text-shadow:0 2px 8px rgba(0,0,0,.7);
+    background:linear-gradient(180deg, transparent, rgba(0,0,0,.55));
+  }
+  .nfx-poster.has-img .nfx-poster-fallback{ display:none; }
+  .nfx-badge{
+    position:absolute; top:0; left:0; z-index:2;
+    background:var(--nfx-red); color:#fff;
+    font-size:8.5px; font-weight:800; letter-spacing:.06em;
+    padding:3px 4px; border-radius:0 0 4px 0;
+    text-transform:uppercase;
+  }
+  .nfx-lock{
+    position:absolute; top:5px; right:5px; z-index:2;
+    width:20px; height:20px; border-radius:50%;
+    background:rgba(0,0,0,.6); border:1px solid rgba(255,255,255,.2);
+    display:flex; align-items:center; justify-content:center; font-size:9.5px;
+  }
+  .nfx-bar{
+    position:absolute; bottom:0; left:0; right:0; z-index:2;
+    height:3px; background:rgba(255,255,255,.28);
+  }
+  .nfx-bar i{ display:block; height:100%; background:var(--nfx-red); }
+  .nfx-card-label{
+    margin-top:6px; font-size:11px; color:var(--nfx-txt-soft);
+    line-height:1.25;
+  }
+  /* fila top 10 */
+  .nfx-rail.top10 .nfx-card{ width:150px; display:flex; align-items:flex-end; gap:2px; }
+  .nfx-rail.top10 .nfx-num{
+    font-family:'Bebas Neue', sans-serif;
+    font-size:78px; line-height:.72; color:#000;
+    -webkit-text-stroke:1.6px rgba(255,255,255,.55);
+    flex:0 0 auto; margin-bottom:-4px; margin-right:-6px;
+  }
+  .nfx-rail.top10 .nfx-poster{ width:96px; flex:0 0 96px; }
+
+  /* --- barra inferior --- */
+  .nfx-tabs{
+    position:absolute; bottom:0; left:0; right:0; z-index:12;
+    display:flex; justify-content:space-around; align-items:center;
+    padding:9px 0 calc(9px + env(safe-area-inset-bottom)) 0;
+    background:rgba(0,0,0,.94);
+    border-top:1px solid rgba(255,255,255,.07);
+    backdrop-filter:blur(10px);
+  }
+  .nfx-tab{
+    display:flex; flex-direction:column; align-items:center; gap:3px;
+    background:none; border:none; color:var(--nfx-txt-dim);
+    font-size:10.5px; cursor:pointer;
+  }
+  .nfx-tab b{ font-size:17px; font-weight:400; line-height:1; }
+  .nfx-tab.active{ color:#fff; font-weight:600; }
+
+  /* --- ficha inferior (bottom sheet) --- */
+  .nfx-sheet-bg{
+    position:absolute; inset:0; z-index:30;
+    background:rgba(0,0,0,.6);
+    opacity:0; pointer-events:none; transition:opacity .3s ease;
+  }
+  .nfx-sheet-bg.on{ opacity:1; pointer-events:auto; }
+  .nfx-sheet{
+    position:absolute; left:0; right:0; bottom:0; z-index:31;
+    background:linear-gradient(180deg, #202020, #0D0D0D);
+    border-top:1px solid rgba(255,255,255,.08);
+    border-radius:16px 16px 0 0;
+    padding:14px 18px calc(20px + env(safe-area-inset-bottom)) 18px;
+    transform:translateY(103%);
+    transition:transform .38s cubic-bezier(.2,.85,.25,1);
+    box-shadow:0 -14px 40px rgba(0,0,0,.6);
+  }
+  .nfx-sheet.on{ transform:translateY(0); }
+  .nfx-sheet-grab{
+    width:38px; height:4px; border-radius:999px;
+    background:rgba(255,255,255,.28); margin:0 auto 12px auto;
+  }
+  .nfx-sheet-row{ display:flex; gap:12px; align-items:flex-start; }
+  .nfx-sheet-poster{
+    flex:0 0 74px; aspect-ratio:2/3; border-radius:5px; overflow:hidden;
+    background:var(--g, linear-gradient(150deg,#333,#111));
+    position:relative;
+  }
+  .nfx-sheet-poster img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+  .nfx-sheet-title{ margin:0 0 5px 0; font-size:17px; font-weight:700; }
+  .nfx-sheet-meta{
+    display:flex; align-items:center; gap:8px; flex-wrap:wrap;
+    font-size:11.5px; color:var(--nfx-txt-soft); margin-bottom:6px;
+  }
+  .nfx-match{ color:#4CD964; font-weight:700; }
+  .nfx-rating{ border:1px solid rgba(255,255,255,.35); padding:0 4px; border-radius:2px; font-size:10.5px; }
+  .nfx-sheet-desc{ margin:0; font-size:12.5px; line-height:1.5; color:var(--nfx-txt-soft); }
+  .nfx-sheet-actions{ display:flex; gap:10px; margin-top:14px; }
+  .nfx-sheet-actions .nfx-play{ flex:1; justify-content:center; }
+  .nfx-btn-ghost{
+    flex:1; padding:10px 14px; border-radius:4px;
+    border:1px solid rgba(255,255,255,.28); background:rgba(255,255,255,.06);
+    color:#fff; font-size:14px; font-weight:600; cursor:pointer;
+  }
+  .nfx-btn-ghost:active{ background:rgba(255,255,255,.14); }
+
+  /* --- toast --- */
+  .nfx-toast{
+    position:absolute; z-index:50; left:50%; bottom:96px;
+    transform:translate(-50%, 14px);
+    background:rgba(25,25,25,.96); border:1px solid rgba(255,255,255,.12);
+    color:#fff; font-size:12.5px; padding:10px 16px; border-radius:999px;
+    opacity:0; pointer-events:none; transition:opacity .25s ease, transform .25s ease;
+    max-width:88%; text-align:center;
+  }
+  .nfx-toast.on{ opacity:1; transform:translate(-50%, 0); }
+
+  /* ================= 5. REPRODUCTOR ================= */
+  #nfxPlayer{ background:#000; align-items:center; justify-content:center; }
+  .nfx-player-bar{
+    position:absolute; z-index:5; top:0; left:0; right:0;
+    display:flex; align-items:center; gap:12px;
+    padding:calc(12px + env(safe-area-inset-top)) 16px 12px 16px;
+    background:linear-gradient(180deg, rgba(0,0,0,.85), transparent);
+  }
+  .nfx-back{
+    background:none; border:none; color:#fff; font-size:22px; line-height:1;
+    cursor:pointer; padding:0;
+  }
+  .nfx-player-name{ font-size:14px; font-weight:600; color:#fff; }
+  .nfx-video-box{
+    width:100%; min-height:52vw; background:#000;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .nfx-video-box video{
+    width:100%; height:auto; max-height:100vh;
+    display:block; background:#000;
+  }
+  .nfx-player-hint{
+    position:absolute; bottom:calc(18px + env(safe-area-inset-bottom)); left:0; right:0;
+    text-align:center; font-size:11.5px; color:var(--nfx-txt-dim);
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .nfx-hero-bg, .nfx-bars i, .nfx-profile.main .nfx-avatar{ animation:none !important; }
+    .nfx-word b{ animation:none !important; opacity:1; transform:none; }
+    .nfx-stage, .nfx-sheet{ transition-duration:.01ms; }
+  }
+
+  /* video */
+  .video-wrap{ width:92%; max-width:400px; aspect-ratio:16/9; border-radius:12px; overflow:hidden; box-shadow:0 10px 24px rgba(107,39,55,.25); background:#000;}
+  .video-wrap video{ width:100%; height:100%; object-fit:contain; display:block; background:#000; }
+
+  .continue-btn{
+    margin-top:22px; background:var(--burgundy); color:var(--paper); border:none; border-radius:999px;
+    padding:12px 26px; font-family:'Quicksand',sans-serif; font-weight:700; font-size:15px; letter-spacing:.02em;
+    cursor:pointer; box-shadow:0 6px 14px rgba(107,39,55,.3);
+  }
+
+  /* ================= SCENE 5: PENGUIN GAME ================= */
+  .game-timer{
+    font-family:'Quicksand',sans-serif; font-weight:700; font-size:22px; color:var(--burgundy);
+    background:var(--paper); border:2px solid var(--rose); border-radius:999px;
+    padding:4px 16px; margin-bottom:14px; min-width:60px;
+  }
+  .pengrid{
+    display:grid; grid-template-columns:repeat(4, 1fr); gap:8px;
+    width:100%; max-width:320px;
+  }
+  .pcard{
+    aspect-ratio:1/1; perspective:600px; cursor:pointer;
+  }
+  .pcard-inner{
+    position:relative; width:100%; height:100%; transition:transform .45s;
+    transform-style:preserve-3d;
+  }
+  .pcard.flipped .pcard-inner, .pcard.matched .pcard-inner{ transform:rotateY(180deg); }
+  .pface{
+    position:absolute; inset:0; backface-visibility:hidden;
+    display:flex; align-items:center; justify-content:center;
+    border-radius:10px; font-size:26px;
+  }
+  .pfront{
+    background:linear-gradient(160deg, var(--rose), var(--burgundy));
+    color:var(--paper); font-size:20px;
+  }
+  .pback{
+    background:var(--paper); border:2px solid var(--rose); transform:rotateY(180deg);
+  }
+  .pcard.matched .pback{ opacity:.55; border-color:#7FB08A; }
+
+  .game-result{
+    position:absolute; inset:0; background:rgba(30,15,15,.85);
+    display:flex; align-items:center; justify-content:center;
+    opacity:0; pointer-events:none; transition:opacity .3s ease;
+    z-index:40; padding:24px;
+  }
+  .game-result.active{ opacity:1; pointer-events:auto; }
+  .game-result-inner{
+    background:var(--paper); border-radius:18px; padding:28px 22px; text-align:center;
+    max-width:280px; box-shadow:0 14px 30px rgba(0,0,0,.4);
+  }
+
+  /* ================= ESCENA 6 · LOS 7 REGALOS ================= */
+  #scene-riddles{ justify-content:center; overflow-y:auto; padding:calc(3vh + env(safe-area-inset-top)) 22px 3vh 22px; }
+  #riddleMenuView, #riddleActiveView{ width:100%; max-width:340px; }
+
+  /* --- barra de progreso --- */
+  .riddle-progress{
+    display:flex; gap:5px; justify-content:center; margin:10px auto 2px auto; width:82%;
+  }
+  .riddle-progress i{
+    flex:1; height:5px; border-radius:999px;
+    background:rgba(156,63,93,.2);
+    transition:background .4s ease, box-shadow .4s ease;
+  }
+  .riddle-progress i.on{
+    background:linear-gradient(90deg, var(--rose), var(--burgundy));
+    box-shadow:0 2px 8px rgba(156,63,93,.35);
+  }
+  .riddle-progress-txt{
+    font-family:'Quicksand',sans-serif; font-size:12px; letter-spacing:.1em;
+    text-transform:uppercase; color:var(--rose-deep); opacity:.85; margin:6px 0 2px 0;
+  }
+
+  /* --- menú de los 7 --- */
+  .riddle-menu-row{
+    display:flex; flex-wrap:wrap; align-items:flex-start; gap:12px; justify-content:center;
+    max-width:330px; margin:12px auto 0 auto;
+  }
+  .riddle-menu-item{
+    display:flex; flex-direction:column; align-items:center; gap:6px;
+    width:70px; min-height:112px;
+    opacity:0; transform:translateY(14px);
+    animation:polaIn .5s ease forwards;
+    animation-delay:calc(var(--i) * .07s);
+  }
+  .riddle-menu-icon{
+    position:relative;
+    width:60px; height:60px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center; font-size:24px;
+    background:linear-gradient(160deg,#FFFDF8, var(--paper-dark));
+    border:2px solid rgba(198,87,122,.55);
+    box-shadow:0 6px 14px rgba(107,39,55,.22), inset 0 -3px 6px rgba(107,39,55,.08);
+    transition:transform .18s ease;
+  }
+  .riddle-menu-icon.locked{ opacity:.42; border-style:dashed; box-shadow:none; }
+  .riddle-menu-icon.current{
+    border-color:var(--gold);
+    background:linear-gradient(160deg, var(--rose), var(--burgundy));
+    color:var(--paper); cursor:pointer;
+    box-shadow:0 8px 20px rgba(156,63,93,.4);
+    animation:riddleBeat 1.9s ease-in-out infinite;
+  }
+  .riddle-menu-icon.current:before{
+    content:""; position:absolute; inset:-7px; border-radius:50%;
+    border:2px solid rgba(201,162,39,.55);
+    animation:riddleRing 1.9s ease-out infinite;
+  }
+  @keyframes riddleBeat{
+    0%,100%{ transform:scale(1); }
+    50%{ transform:scale(1.07); }
+  }
+  @keyframes riddleRing{
+    0%{ transform:scale(.9); opacity:.9; }
+    100%{ transform:scale(1.25); opacity:0; }
+  }
+  .riddle-menu-icon.current:active{ transform:scale(.92); }
+  .riddle-menu-icon.done{
+    background:linear-gradient(160deg,#EFF7F0,#DDEDE1);
+    border-color:#7FB08A; color:#3F7A5C;
+    transform:rotate(-6deg);
+  }
+  .riddle-menu-label{
+    font-family:'Quicksand',sans-serif; font-size:11px; font-weight:600;
+    color:var(--rose-deep); opacity:.85;
+  }
+  .riddle-menu-item.is-current .riddle-menu-label{ color:var(--burgundy); opacity:1; }
+  .riddle-tap{
+    font-family:'Quicksand',sans-serif; font-size:11px; font-weight:700;
+    color:var(--burgundy); background:rgba(201,162,39,.22);
+    border:1px solid rgba(201,162,39,.5); border-radius:999px;
+    padding:2px 9px; margin-top:2px;
+    animation:pulse 1.7s ease-in-out infinite;
+  }
+
+  /* --- tarjeta de la adivinanza --- */
+  .riddle-card{
+    position:relative;
+    margin:14px auto 0 auto; max-width:330px; width:100%;
+    padding:26px 20px 20px 20px;
+    border-radius:14px;
+    border:1px solid rgba(107,39,55,.16);
+    background:
+      radial-gradient(circle at 88% 6%, rgba(201,162,39,.14), transparent 34%),
+      linear-gradient(180deg,#FFFCF6, #FAEFE3 70%, #F4E3D2);
+    box-shadow:0 16px 34px rgba(107,39,55,.24), inset 0 0 34px rgba(201,162,39,.08);
+    animation:riddleCardIn .6s cubic-bezier(.2,.9,.25,1);
+  }
+  @keyframes riddleCardIn{
+    from{ opacity:0; transform:translateY(18px) scale(.97); }
+  }
+  .riddle-card.shake{ animation:riddleShake .45s ease; }
+  @keyframes riddleShake{
+    0%,100%{ transform:translateX(0); }
+    22%{ transform:translateX(-7px); }
+    46%{ transform:translateX(6px); }
+    72%{ transform:translateX(-3px); }
+  }
+  .riddle-ribbon{
+    position:absolute; top:-13px; left:50%; transform:translateX(-50%);
+    padding:5px 16px; border-radius:999px;
+    background:linear-gradient(160deg, var(--rose), var(--burgundy));
+    color:var(--paper); white-space:nowrap;
+    font-family:'Quicksand',sans-serif; font-weight:700; font-size:11.5px;
+    letter-spacing:.1em; text-transform:uppercase;
+    box-shadow:0 6px 14px rgba(107,39,55,.3);
+  }
+  .riddle-counter{ display:none; }
+  .riddle-wax{
+    font-size:26px; margin-bottom:4px;
+    filter:drop-shadow(0 6px 10px rgba(107,39,55,.22));
+  }
+  .riddle-poem{
+    font-family:'Cormorant Garamond', serif; font-style:italic;
+    font-size:18px; line-height:1.5; color:var(--ink);
+    margin:4px 0 6px 0; white-space:normal;
+  }
+  .riddle-line{
+    opacity:0; transform:translateY(10px);
+    animation:lpIn .55s ease forwards;
+    animation-delay:calc(var(--i) * .18s);
+  }
+  .riddle-q{
+    font-family:'Quicksand',sans-serif; font-weight:700; font-size:13px;
+    letter-spacing:.06em; text-transform:uppercase;
+    color:var(--rose-deep); opacity:.9; margin:12px 0 0 0;
+  }
+  .riddle-options{
+    display:flex; flex-direction:column; gap:10px;
+    margin:12px auto 0 auto; width:100%; max-width:290px;
+  }
+  .riddle-option-btn{
+    position:relative; overflow:hidden;
+    display:flex; align-items:center; gap:12px;
+    padding:13px 16px; border-radius:12px;
+    border:2px solid rgba(198,87,122,.75);
+    background:linear-gradient(180deg,#FFFDF8,#F8EEE1);
+    font-family:'Quicksand',sans-serif; font-weight:700; font-size:16px;
+    color:var(--burgundy); cursor:pointer; text-align:left;
+    box-shadow:0 5px 12px rgba(107,39,55,.14);
+    transition:transform .12s ease, box-shadow .2s ease, background .3s ease, border-color .3s ease;
+  }
+  .riddle-option-btn:before{
+    content:attr(data-key);
+    flex:0 0 26px; height:26px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    background:rgba(198,87,122,.16); color:var(--rose-deep);
+    font-size:12.5px; font-weight:800;
+  }
+  .riddle-option-btn:active{ transform:scale(.975); }
+  .riddle-option-btn.correct{
+    background:linear-gradient(180deg,#F1F9F2,#DFEEE3);
+    border-color:#7FB08A; color:#3F7A5C;
+  }
+  .riddle-option-btn.correct:before{ background:rgba(63,122,92,.18); color:#3F7A5C; content:"✓"; }
+  .riddle-option-btn.wrong{
+    background:linear-gradient(180deg,#FBE9E9,#F3D9D9);
+    border-color:#C6577A; color:#9C3F5D;
+  }
+  .riddle-option-btn.disabled{ pointer-events:none; opacity:.62; box-shadow:none; }
+  .riddle-msg{
+    min-height:24px; margin:12px 0 0 0;
+    font-family:'Quicksand',sans-serif; font-weight:700; font-size:15px;
+    color:var(--burgundy);
+  }
+  .riddle-msg.wrong{ color:#9C3F5D; }
+  .riddle-msg.right{ color:#3F7A5C; }
+  .riddle-answer-box{ display:none; }
+</style>
+</head>
+<body>
+<div id="app">
+
+  <div class="floaters" id="floaters"></div>
+
+  <!-- SCENE 1: COVER -->
+  <section class="scene active" id="scene-cover">
+    <div class="char-wrap photo-frame">
+      <img src="p2.png" alt="ella" loading="eager">
+    </div>
+    <h1 class="script">Feliz Cumpleaños</h1>
+    <p class="hint tap-pulse">toca para continuar ✨</p>
+  </section>
+
+  <!-- SCENE 2: LOCK -->
+  <section class="scene" id="scene-lock">
+    <p class="lock-title">desbloquea tu sorpresa</p>
+    <div class="lock-row">
+      <div class="lock-illustration photo-frame">
+        <img src="ambosdibujo.png" alt="los dos" loading="eager">
+      </div>
+      <div class="keypad-col">
+        <div class="dots" id="dots">
+          <span>♥</span><span>♥</span><span>♥</span><span>♥</span>
+        </div>
+        <div class="keypad" id="keypad"></div>
+        <div class="keypad-msg" id="keypadMsg">&nbsp;</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SCENE 3: SPEECH -->
+  <section class="scene" id="scene-speech">
+    <div class="bubble">Hola amor, te he preparado este regalo para ti!</div>
+    <div class="char-wrap photo-frame" style="margin-top:14px;">
+      <img src="p2.png" alt="ella" loading="eager">
+    </div>
+    <p class="hint tap-pulse" style="margin-top:10px;">toca para ver tu regalo 🎁</p>
+  </section>
+
+  <!-- SCENE 4: GIFTS -->
+  <section class="scene" id="scene-gifts">
+    <h1 class="script" style="font-size:38px;">Elige tu regalo</h1>
+    <div class="gifts-row">
+      <div>
+        <button class="gift-btn" data-gift="left" onclick="openGift('left')">
+          <svg viewBox="0 0 100 100"><g id="giftL"></g></svg>
+        </button>
+        <div class="gift-label">una carta</div>
+      </div>
+      <div>
+        <button class="gift-btn" data-gift="middle" onclick="openGift('middle')">
+          <svg viewBox="0 0 100 100"><g id="giftM"></g></svg>
+        </button>
+        <div class="gift-label">recuerdos</div>
+      </div>
+      <div>
+        <button class="gift-btn" data-gift="right" onclick="openGift('right')">
+          <svg viewBox="0 0 100 100"><g id="giftR"></g></svg>
+        </button>
+        <div class="gift-label">netflix</div>
+      </div>
+    </div>
+    <button class="continue-btn" id="gameBtn" style="display:none;" onclick="goToGame()">Ir al juego final ❄️</button>
+  </section>
+
+  <!-- SCENE 5: JUEGO PINGÜINOS -->
+  <section class="scene" id="scene-game">
+    <h1 class="script" style="font-size:34px;">Memoria de pingüinos</h1>
+    <p class="hint" style="margin-bottom:6px;">Encuentra las 6 parejas antes de que se derrita el hielo</p>
+    <div class="game-timer" id="gameTimer">45</div>
+    <div class="pengrid" id="pengrid"></div>
+
+    <div class="game-result" id="gameResult">
+      <div class="game-result-inner">
+        <p class="script" id="gameResultTitle" style="font-size:36px;"></p>
+        <p id="gameResultMsg" style="font-family:'Quicksand',sans-serif; font-weight:600; font-size:16px;"></p>
+        <button class="continue-btn" id="gameContinueBtn" style="display:none;" onclick="goToRiddles()">Continuar a los regalos</button>
+        <button class="continue-btn" id="gameRetryBtn" onclick="startGame()">Volver a intentar</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- SCENE 6: LOS 7 REGALOS -->
+  <section class="scene" id="scene-riddles">
+
+    <!-- Vista MENÚ: 7 regalos, solo se puede coger el siguiente en orden -->
+    <div id="riddleMenuView">
+      <h1 class="script" style="font-size:34px; margin:0;">Tus 7 regalos</h1>
+      <p class="riddle-progress-txt" id="riddleProgressTxt">0 de 7 conseguidos</p>
+      <div class="riddle-progress" id="riddleProgress"></div>
+      <p class="hint" style="font-size:15px; margin-top:10px;">Resuelve la pista de cada uno para poder cogerlo</p>
+      <div class="riddle-menu-row" id="riddleMenuRow"></div>
+    </div>
+
+    <!-- Vista ADIVINANZA activa -->
+    <div id="riddleActiveView" style="display:none;">
+      <div class="riddle-card" id="riddleCard">
+        <div class="riddle-ribbon" id="riddleCounter">Regalo 1 de 7</div>
+        <div class="riddle-wax">🎁</div>
+        <div class="riddle-poem" id="riddlePoem"></div>
+        <p class="riddle-q">¿Qué tipo de regalo es?</p>
+        <div class="riddle-options" id="riddleOptions"></div>
+        <div class="riddle-msg" id="riddleMsg">&nbsp;</div>
+        <button class="continue-btn" id="riddleNextBtn" style="display:none; margin-top:14px;" onclick="nextRiddle()">Siguiente</button>
+        <div class="burst" id="riddleBurst"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SCENE 7: MENSAJE FINAL -->
+  <section class="scene" id="scene-finalmsg">
+    <h1 class="script" style="font-size:44px;">Muchísimas felicidades, Carmen</h1>
+    <p class="hint" style="margin-top:10px;">❤️❤️❤️</p>
+  </section>
+
+  <!-- OVERLAY: LETTER (regalo 1) -->
+  <div class="overlay" id="overlay-letter">
+    <div class="letter-ambient" id="letterAmbient"></div>
+    <button class="back-btn" onclick="closeOverlay('overlay-letter')">← volver</button>
+
+    <div class="envelope" id="envelopeBtn" onclick="openEnvelope()">
+      <div class="burst" id="letterBurst"></div>
+      <svg viewBox="0 0 220 158" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="envBody" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#FBEADA"/>
+            <stop offset="1" stop-color="#EFD2BC"/>
+          </linearGradient>
+          <linearGradient id="envFlap" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#F6DCC6"/>
+            <stop offset="1" stop-color="#E7BCA6"/>
+          </linearGradient>
+          <radialGradient id="waxG" cx="35%" cy="30%" r="75%">
+            <stop offset="0" stop-color="#E86B8A"/>
+            <stop offset="1" stop-color="#9C3F5D"/>
+          </radialGradient>
+        </defs>
+        <ellipse cx="110" cy="150" rx="72" ry="7" fill="#9C3F5D" opacity=".16"/>
+        <rect x="5" y="20" width="210" height="120" rx="7" fill="url(#envBody)" stroke="#C6577A" stroke-width="2"/>
+        <path d="M8 137 L110 78 L212 137" fill="#F7E2D0" opacity=".7"/>
+        <path d="M5 22 L110 95 L215 22" fill="none" stroke="#C6577A" stroke-width="2" opacity=".55"/>
+        <path id="flap" d="M5 22 L110 90 L215 22 L215 20 Q215 12 205 12 L15 12 Q5 12 5 20 Z"
+              fill="url(#envFlap)" stroke="#C6577A" stroke-width="2"/>
+        <g class="seal">
+          <circle cx="110" cy="78" r="19" fill="url(#waxG)"/>
+          <circle cx="110" cy="78" r="19" fill="none" stroke="#6B2737" stroke-width="1.4" opacity=".45"/>
+          <circle class="seal-shine" cx="103" cy="71" r="6" fill="#FFFFFF" opacity=".3"/>
+          <path d="M110 87 C100 80, 97 74, 101 71 C104 69, 108 71, 110 74 C112 71, 116 69, 119 71 C123 74, 120 80, 110 87 Z" fill="#FBF1E6" opacity=".9"/>
+        </g>
+      </svg>
+    </div>
+
+    <p class="hint tap-pulse" id="envelopeHint" style="margin-top:12px;">toca el sobre para abrirlo</p>
+
+    <div class="letter-paper" id="letterPaper">
+      <p class="letter-title">Para ti ✎</p>
+      <svg class="letter-rule" viewBox="0 0 300 12" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M2 8 C58 1, 104 11, 152 5 C202 -1, 252 10, 298 4"/>
+      </svg>
+
+      <p class="lp lead" style="--i:0">Una carta para ti.</p>
+
+      <p class="lp" style="--i:1">— Hola amor,</p>
+
+      <p class="lp" style="--i:2">Espero que este sea el primer cumpleaños de por lo menos 70 más que vivamos. Todavía me acuerdo de aquella plaza en Madrid en la que nos conocimos, no recuerdo ni su nombre, ese día iba realmente sin muchas ganas de nada, desmotivado; en general no sé por qué acabé yendo ese día porque realmente a mis amigos les dije: "Me da pereza bajar a Madrid". Pero algo me hizo bajar.</p>
+
+      <p class="lp" style="--i:3">Recuerdo que llegué muy pronto y WIDO me dijo que estaba con amigos suyos y justo ese día no había cargado el bono y dije: "Qué pereza gastar más viajes para estar con gente que no conozco". Y mira, al final gracias a todo esto conocí a una de las chicas más maravillosas del mundo.</p>
+
+      <p class="lp" style="--i:4">Me encantó cómo me trataste de primeras, cómo me hacías sentir cómodo, y es cierto que nos fuimos, pero ahora, escribiendo esta carta, estoy recordando esa sensación de vacío que se me quedó cuando te fuiste.</p>
+
+      <p class="lp" style="--i:5">Luego la vida nos volvió a juntar en casa de WIDO y no quise ver que te interesaba. Dije tonterías jaja, pero aun así, toda mi vida, pase lo que pase, te estaré agradecido por escribirme. Desde ahí descubrí todo de ti y me parece increíble que desde el principio fueras tan abierta de contarme tus problemas de trabajo y, en general, y lo valoré mucho. Dije: "De verdad que esta chica se merece lo mejor en todo".</p>
+
+      <p class="lp" style="--i:6">Eres trabajadora, buena persona, risueña, bromista, madura, inteligente, luchadora. Preciosa, es que tienes una carita... y un cuerpazo que, aunque me digas que no te convence, amor, eres un quesito 5 estrellas.</p>
+
+      <p class="lp" style="--i:7">No me voy a enrollar mucho más. Solo quería decirte de verdad que en mi vida he sentido algo tan bonito, que esto lo quiero cuidar con toda mi vida porque contigo soy yo al 100% y casi nunca me había pasado eso.</p>
+
+      <p class="lp" style="--i:8">Estás sacando mi niño interior y eso lo valoro mucho.</p>
+
+      <p class="lp" style="--i:9">Espero que disfrutes mucho del cumple y ojalá en tu próximo cumpleaños estemos viviendo ya juntos o mirando para ello.</p>
+
+      <p class="lp" style="--i:10">Te quiero mucho y muchas felicidades ❤️</p>
+
+      <p class="lp" style="--i:11">—</p>
+
+      <svg class="letter-sign" viewBox="0 0 132 60" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M66 55 C 22 30, 12 10, 33 5 C 50 1, 62 15, 66 24 C 70 15, 82 1, 99 5 C 120 10, 110 30, 66 55 Z"/>
+      </svg>
+    </div>
+
+    <p class="letter-scrollhint" id="letterScrollHint" style="display:none;">desliza para seguir leyendo ↓</p>
+  </div>
+
+  <!-- OVERLAY: PHOTOS (regalo 2) -->
+  <div class="overlay" id="overlay-photos">
+    <button class="back-btn" onclick="closeOverlay('overlay-photos')">← volver</button>
+    <h1 class="script" style="font-size:32px; margin:0;">Nuestros recuerdos</h1>
+    <p class="photo-hint">toca una foto para verla grande</p>
+    <div class="photo-grid" id="photoGrid"></div>
+  </div>
+
+  <!-- ==========================================================
+       OVERLAY: REGALO 3 · NETFLIX
+       Pantallas: intro -> login -> perfiles -> home -> reproductor
+       ========================================================== -->
+  <div class="overlay" id="overlay-video">
+
+    <button id="nfxExit" onclick="closeOverlay('overlay-video')" aria-label="Salir">✕</button>
+
+    <!-- ---------- 1. ANIMACIÓN DE INICIO ---------- -->
+    <div class="nfx-stage" id="nfxIntro">
+      <div class="nfx-bars" id="nfxBars"></div>
+      <div class="nfx-glow" id="nfxGlow"></div>
+      <div class="nfx-word" id="nfxWord"></div>
+    </div>
+
+    <!-- ---------- 2. INICIO DE SESIÓN ---------- -->
+    <div class="nfx-stage" id="nfxLogin">
+      <div class="nfx-login-mark">NETFLIX</div>
+      <h2>Inicia sesión</h2>
+      <input class="nfx-field" id="nfxEmail" type="text" inputmode="email" autocomplete="off" spellcheck="false">
+      <input class="nfx-field" id="nfxPass" type="password" value="cumple21" autocomplete="off">
+      <button class="nfx-btn-red" onclick="nfxSignIn()">Iniciar sesión</button>
+      <div class="nfx-login-foot">
+        <span>✓ Recordarme</span>
+        <span>¿Necesitas ayuda?</span>
+      </div>
+      <p class="nfx-login-note">Esta cuenta solo tiene un perfil y una película de estreno. Nada más.</p>
+    </div>
+
+    <!-- ---------- 3. PERFILES ---------- -->
+    <div class="nfx-stage" id="nfxProfiles">
+      <h2>¿Quién está viendo?</h2>
+      <div class="nfx-profiles-row" id="nfxProfilesRow"></div>
+      <div class="nfx-toast" id="nfxProfileToast">Ese perfil está bloqueado. Hoy manda Carmen ❤️</div>
+    </div>
+
+    <!-- ---------- 4. HOME ---------- -->
+    <div class="nfx-stage" id="nfxHome">
+
+      <div class="nfx-top" id="nfxTop">
+        <div class="nfx-top-row">
+          <div class="nfx-n">NETFLIX</div>
+          <div class="nfx-top-icons">
+            <span>🔍</span>
+            <span class="nfx-top-avatar" id="nfxTopAvatar">❤️</span>
+          </div>
+        </div>
+        <div class="nfx-chips">
+          <div class="nfx-chip">Series</div>
+          <div class="nfx-chip">Películas</div>
+          <div class="nfx-chip active">Nosotros ❤️</div>
+        </div>
+      </div>
+
+      <div class="nfx-feed" id="nfxFeed">
+        <!-- hero -->
+        <div class="nfx-hero">
+          <div class="nfx-hero-bg" id="nfxHeroBg"></div>
+          <div class="nfx-hero-fade"></div>
+          <div class="nfx-hero-inner">
+            <div id="nfxHeroTitleBox"></div>
+            <div class="nfx-hero-tags" id="nfxHeroTags"></div>
+            <div class="nfx-hero-btns">
+              <button class="nfx-mini" onclick="nfxToast('Ya está en tu lista ❤️')"><b>＋</b>Mi lista</button>
+              <button class="nfx-play" onclick="nfxOpenPlayer()">▶ Reproducir</button>
+              <button class="nfx-mini" onclick="nfxOpenSheet('nosotros')"><b>ⓘ</b>Info</button>
+            </div>
+          </div>
+        </div>
+        <!-- filas -->
+        <div id="nfxRows"></div>
+      </div>
+
+      <div class="nfx-tabs">
+        <button class="nfx-tab active"><b>⌂</b>Inicio</button>
+        <button class="nfx-tab" onclick="nfxToast('Novedades: solo hay un estreno hoy 🎬')"><b>▦</b>Novedades</button>
+        <button class="nfx-tab" onclick="nfxToast('Mi Netflix: 1 título, infinitas ganas ❤️')"><b>☰</b>Mi Netflix</button>
+      </div>
+
+      <div class="nfx-sheet-bg" id="nfxSheetBg" onclick="nfxCloseSheet()"></div>
+      <div class="nfx-sheet" id="nfxSheet">
+        <div class="nfx-sheet-grab"></div>
+        <div class="nfx-sheet-row">
+          <div class="nfx-sheet-poster" id="nfxSheetPoster"></div>
+          <div style="flex:1; min-width:0;">
+            <h3 class="nfx-sheet-title" id="nfxSheetTitle"></h3>
+            <div class="nfx-sheet-meta" id="nfxSheetMeta"></div>
+            <p class="nfx-sheet-desc" id="nfxSheetDesc"></p>
+          </div>
+        </div>
+        <div class="nfx-sheet-actions" id="nfxSheetActions"></div>
+      </div>
+
+      <div class="nfx-toast" id="nfxToast"></div>
+    </div>
+
+    <!-- ---------- 5. REPRODUCTOR ---------- -->
+    <div class="nfx-stage" id="nfxPlayer">
+      <div class="nfx-player-bar">
+        <button class="nfx-back" onclick="nfxClosePlayer()" aria-label="Volver">←</button>
+        <span class="nfx-player-name" id="nfxPlayerName"></span>
+      </div>
+      <div class="nfx-video-box">
+        <video id="videoFrame" controls playsinline preload="metadata"></video>
+      </div>
+      <div class="nfx-player-hint">Toca ← para volver al inicio</div>
+    </div>
+
+  </div>
+
+</div>
+
+<audio id="bgMusic" loop preload="auto"></audio>
+
+<div class="lightbox" id="lightbox" onclick="lbBackdrop(event)">
+  <button class="lb-close" onclick="closeLightbox()" aria-label="Cerrar">✕</button>
+  <img id="lightboxImg" src="" alt="foto ampliada">
+  <div class="lb-bar">
+    <button class="lb-btn" onclick="lbStep(-1)" aria-label="Anterior">‹</button>
+    <span class="lb-count" id="lbCount">1 / 1</span>
+    <button class="lb-btn" onclick="lbStep(1)" aria-label="Siguiente">›</button>
+  </div>
+</div>
+
+<script>
+/* ===================== CONFIG: EDITA AQUÍ ===================== */
+// Música de fondo: sube tu canción junto a este archivo con este nombre exacto.
+const MUSIC_SRC = "musica.mp3";
+const MUSIC_VOLUME = 0.28; // 0 = silencio, 1 = volumen máximo. Bajo a propósito para que no tape nada.
+
+const PASSWORD = "2102";
+
+// Foto: añade tantas rutas como quieras (súbelas junto a este html, ej. "foto1.jpg")
+const PHOTOS = [
+  "image2.jpg", "image4.jpg", "imag3.jpg", "image.jpg"
+];
+
+// Pie de cada foto (opcional). Si lo dejas vacío "" no sale nada.
+// El orden es el mismo que el de PHOTOS.
+const PHOTO_CAPTIONS = [
+  "", "", "", ""
+];
+
+// Vídeo local: sube tu archivo de vídeo (ej. "sorpresa.mp4") a la misma carpeta/repositorio
+// que este html, y escribe aquí su nombre exacto.
+const VIDEO_SRC = "copy_D0FBFB2E-E98D-402F-B4E2-333B4BC3C083.mov"; // ej: "sorpresa.mp4"
+/* ================================================================ */
+
+let entered = "";
+let giftsOpened = { left:false, middle:false, right:false };
+
+function showScene(id){
+  document.querySelectorAll(".scene").forEach(s=>s.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+}
+
+/* ===================== MÚSICA DE FONDO ===================== */
+const bgMusic = document.getElementById("bgMusic");
+let musicStarted = false;
+let musicEnded = false;
+
+function startMusic(){
+  if(musicStarted) return;
+  musicStarted = true;
+  bgMusic.src = MUSIC_SRC;
+  bgMusic.volume = MUSIC_VOLUME;
+  bgMusic.play().catch(()=>{});
+}
+function pauseMusic(){
+  bgMusic.pause();
+}
+function resumeMusic(){
+  if(musicStarted && !musicEnded){
+    bgMusic.play().catch(()=>{});
+  }
+}
+function stopMusicForGood(){
+  musicEnded = true;
+  bgMusic.pause();
+}
+
+// Scene 1 -> 2
+document.getElementById("scene-cover").addEventListener("click", ()=>{
+  startMusic();
+  showScene("scene-lock");
+});
+
+// Build keypad (heart-shaped buttons)
+const heartSVG = (fill) => `<svg viewBox="0 0 32 29"><path d="M16 29 C16 29 0 18.5 0 8.8 C0 2.8 5.1 0 9.3 0 C12.4 0 14.9 1.9 16 4.4 C17.1 1.9 19.6 0 22.7 0 C26.9 0 32 2.8 32 8.8 C32 18.5 16 29 16 29 Z" fill="${fill}"/></svg>`;
+const keypadLayout = ["1","2","3","4","5","6","7","8","9","","0",""];
+const keypadEl = document.getElementById("keypad");
+keypadLayout.forEach(k=>{
+  const btn = document.createElement("button");
+  btn.className = "key" + (k===""?" ghost":"");
+  if(k!==""){
+    btn.innerHTML = heartSVG("#C6577A") + `<span>${k}</span>`;
+    btn.addEventListener("click", ()=>pressKey(k));
+  }
+  keypadEl.appendChild(btn);
+});
+
+const dotsEl = document.getElementById("dots");
+const msgEl = document.getElementById("keypadMsg");
+
+function updateDots(){
+  const spans = dotsEl.querySelectorAll("span");
+  spans.forEach((s,i)=> s.classList.toggle("filled", i < entered.length));
+}
+
+function pressKey(k){
+  if(entered.length>=4) return;
+  entered += k;
+  updateDots();
+  msgEl.textContent = "\u00A0";
+  msgEl.className = "keypad-msg";
+  if(entered.length===4){
+    setTimeout(checkPassword, 150);
+  }
+}
+
+function checkPassword(){
+  if(entered === PASSWORD){
+    msgEl.textContent = "¡Acertaste!";
+    msgEl.className = "keypad-msg right";
+    setTimeout(()=> showScene("scene-speech"), 900);
+  } else {
+    msgEl.textContent = "¿No te acuerdas bien?";
+    msgEl.className = "keypad-msg wrong";
+    setTimeout(()=>{
+      entered = "";
+      updateDots();
+      msgEl.textContent = "\u00A0";
+      msgEl.className = "keypad-msg";
+    }, 1100);
+  }
+}
+
+// Scene 3 -> 4
+document.getElementById("scene-speech").addEventListener("click", (e)=>{
+  showScene("scene-gifts");
+});
+
+/* ---------- Gift box SVGs (closed / open) ---------- */
+function giftSVG(open){
+  if(!open){
+    return `
+    <rect x="14" y="42" width="72" height="46" rx="4" fill="#C6577A"/>
+    <rect x="14" y="42" width="72" height="14" fill="#9C3F5D"/>
+    <rect x="44" y="18" width="12" height="70" fill="#F3D9C6"/>
+    <rect x="14" y="42" width="72" height="8" fill="#F3D9C6"/>
+    <path d="M50 42 Q20 42 26 22 Q34 12 50 42 Z" fill="#E8A6BC"/>
+    <path d="M50 42 Q80 42 74 22 Q66 12 50 42 Z" fill="#E8A6BC"/>
+    `;
+  } else {
+    return `
+    <rect x="14" y="52" width="72" height="36" rx="4" fill="#C6577A"/>
+    <rect x="14" y="52" width="72" height="10" fill="#9C3F5D"/>
+    <rect x="12" y="38" width="76" height="12" rx="3" fill="#F3D9C6" transform="rotate(-6 50 44)"/>
+    <path d="M46 52 Q16 40 24 20 Q34 12 46 52 Z" fill="#E8A6BC" transform="rotate(-8 50 44)"/>
+    <path d="M78 30 l4 8 l-4 8 l-4 -8 z" fill="#E86B8A"/>
+    <path d="M30 26 l3 6 l-3 6 l-3 -6 z" fill="#E86B8A"/>
+    `;
+  }
+}
+function refreshGifts(){
+  document.getElementById("giftL").innerHTML = giftSVG(giftsOpened.left);
+  document.getElementById("giftM").innerHTML = giftSVG(giftsOpened.middle);
+  document.getElementById("giftR").innerHTML = giftSVG(giftsOpened.right);
+  const allOpen = giftsOpened.left && giftsOpened.middle && giftsOpened.right;
+  document.getElementById("gameBtn").style.display = allOpen ? "inline-block" : "none";
+}
+refreshGifts();
+
+function openGift(which){
+  giftsOpened[which] = true;
+  refreshGifts();
+  if(which==="left") openOverlay("overlay-letter");
+  if(which==="middle") openOverlay("overlay-photos");
+  if(which==="right") openOverlay("overlay-video");
+}
+
+function openOverlay(id){
+  document.getElementById(id).classList.add("active");
+  if(id==="overlay-letter") buildLetterAmbient();
+  if(id==="overlay-photos") buildPhotoGrid();
+  if(id==="overlay-video"){
+    nfxStart();
+    pauseMusic();
+  }
+}
+function closeOverlay(id){
+  document.getElementById(id).classList.remove("active");
+  if(id==="overlay-letter") resetLetter();
+  if(id==="overlay-video"){ nfxStop(); resumeMusic(); }
+}
+
+/* ---------- corazones que estallan (se usa en la carta y en los regalos) ---------- */
+function heartBurst(container, count){
+  if(!container) return;
+  const n = count || 14;
+  const icons = ["❤","💖","✨","💫"];
+  container.innerHTML = "";
+  for(let i=0;i<n;i++){
+    const el = document.createElement("i");
+    const ang = (Math.PI*2)*(i/n) + Math.random()*.5;
+    const dist = 55 + Math.random()*75;
+    el.textContent = icons[Math.floor(Math.random()*icons.length)];
+    el.style.setProperty("--x", (Math.cos(ang)*dist).toFixed(1) + "px");
+    el.style.setProperty("--y", (Math.sin(ang)*dist - 18).toFixed(1) + "px");
+    el.style.setProperty("--r", (Math.random()*90-45).toFixed(0) + "deg");
+    el.style.setProperty("--s", (12 + Math.random()*11).toFixed(0) + "px");
+    el.style.animationDelay = (Math.random()*.18).toFixed(2) + "s";
+    container.appendChild(el);
+  }
+  setTimeout(()=>{ container.innerHTML = ""; }, 1700);
+}
+
+/* ---------- REGALO 1: la carta ---------- */
+let letterAmbientBuilt = false;
+function buildLetterAmbient(){
+  if(letterAmbientBuilt) return;
+  letterAmbientBuilt = true;
+  const box = document.getElementById("letterAmbient");
+  for(let i=0;i<12;i++){
+    const s = document.createElement("i");
+    s.textContent = Math.random() < .55 ? "♥" : "✦";
+    s.style.left = (Math.random()*100).toFixed(1) + "%";
+    s.style.fontSize = (10 + Math.random()*9).toFixed(0) + "px";
+    s.style.animationDuration = (11 + Math.random()*9).toFixed(1) + "s";
+    s.style.animationDelay = (Math.random()*12).toFixed(1) + "s";
+    box.appendChild(s);
+  }
+}
+
+function openEnvelope(){
+  const env = document.getElementById("envelopeBtn");
+  if(env.classList.contains("opened")) return;
+
+  env.classList.add("opened");
+  document.getElementById("envelopeHint").style.opacity = "0";
+  heartBurst(document.getElementById("letterBurst"), 16);
+
+  setTimeout(()=> env.classList.add("gone"), 640);
+  setTimeout(()=>{
+    env.style.display = "none";
+    document.getElementById("envelopeHint").style.display = "none";
+  }, 1380);
+
+  setTimeout(()=>{
+    const paper = document.getElementById("letterPaper");
+    // el subrayado y el corazón final se dibujan con su longitud real
+    paper.querySelectorAll("svg path").forEach(path=>{
+      try{
+        const len = path.getTotalLength();
+        path.style.strokeDasharray = len;
+        path.style.strokeDashoffset = len;
+      }catch(e){}
+    });
+    paper.style.display = "block";
+    requestAnimationFrame(()=> requestAnimationFrame(()=> paper.classList.add("show")));
+    setTimeout(()=>{
+      if(paper.scrollHeight > paper.clientHeight + 8){
+        document.getElementById("letterScrollHint").style.display = "block";
+      }
+    }, 800);
+  }, 720);
+}
+
+function resetLetter(){
+  const env = document.getElementById("envelopeBtn");
+  env.classList.remove("opened","gone");
+  env.style.display = "";
+  const hint = document.getElementById("envelopeHint");
+  hint.style.opacity = "1";
+  hint.style.display = "";
+  const paper = document.getElementById("letterPaper");
+  paper.classList.remove("show");
+  paper.style.display = "";
+  paper.scrollTop = 0;
+  const sh = document.getElementById("letterScrollHint");
+  sh.style.display = "none";
+  sh.classList.remove("hide");
+}
+
+document.getElementById("letterPaper").addEventListener("scroll", ()=>{
+  document.getElementById("letterScrollHint").classList.add("hide");
+}, {passive:true});
+
+/* ---------- REGALO 2: los recuerdos (polaroids) ---------- */
+const PHOTO_ROTS = [-3.2, 2.6, 2.1, -2.6, 3.1, -3.5, 1.8, -1.7];
+
+function buildPhotoGrid(){
+  const grid = document.getElementById("photoGrid");
+  grid.innerHTML = "";
+  const total = PHOTOS.length > 0 ? PHOTOS.length : 4;
+
+  for(let i=0;i<total;i++){
+    const wrap = document.createElement("div");
+    wrap.className = "polaroid-wrap";
+    wrap.style.setProperty("--i", i);
+
+    if(PHOTOS[i]){
+      const card = document.createElement("button");
+      card.className = "polaroid";
+      card.style.setProperty("--rot", PHOTO_ROTS[i % PHOTO_ROTS.length] + "deg");
+      const cap = (typeof PHOTO_CAPTIONS !== "undefined" && PHOTO_CAPTIONS[i]) ? PHOTO_CAPTIONS[i] : "";
+      card.innerHTML = `
+        <span class="tape"></span>
+        <span class="polaroid-img"><img src="${PHOTOS[i]}" alt="recuerdo" style="--i:${i}"></span>
+        <span class="polaroid-cap">${cap}</span>`;
+      card.addEventListener("click", ()=> openLightbox(i));
+      wrap.appendChild(card);
+    } else {
+      const empty = document.createElement("div");
+      empty.className = "photo-empty";
+      empty.textContent = "📷 añade tu foto aquí";
+      wrap.appendChild(empty);
+    }
+    grid.appendChild(wrap);
+  }
+}
+
+/* ==================================================================
+   REGALO 3 · NETFLIX
+   Para cambiar imágenes en el futuro: sube los archivos junto a este
+   index.html con los nombres que hay en NFX_MEDIA / img de cada título.
+   No hace falta tocar nada más.
+   ================================================================== */
+
+const NFX_MEDIA = {
+  heroImg:   "hero.jpg",        // fondo grande del estreno
+  heroLogo:  "",                // opcional: "titulo.png" (si lo pones, sustituye al texto)
+  avatarImg: "carmen.jpg",      // foto del perfil de Carmen
+  tadum:     "tadum.mp3",       // opcional: sonido "ta-dum" de la intro
+  email:     "carmen@nuestronetflix.com"
+};
+
+const NFX_HERO = {
+  id:"nosotros",
+  name:"Un cachito de nuestra vida",
+  img:NFX_MEDIA.heroImg,
+  year:"2026",
+  rating:"TP",
+  match:"100",
+  genres:["Nosotros dos","Romántica","Emotiva"],
+  desc:"Un año entero cabe en unos minutos: la plaza de Madrid, los mensajes, los planes tontos y todo lo que viene después. Estreno exclusivo en tu perfil.",
+  accent:"linear-gradient(150deg, #E50914, #4A0209 70%)",
+  playable:true
+};
+
+/* Catálogo de alrededor. Cambia solo "img" cuando tengas las fotos. */
+const NFX_TITLES = [
+  { id:"bridgerton", name:"Bridgerton", img:"bridgerton.jpg", year:"2020", rating:"+16", match:"97",
+    genres:["Época","Romántica"], accent:"linear-gradient(150deg,#5B2A63,#140A18)",
+    desc:"Vestidos, cotilleos y miradas largas. La empezaste tú y la acabamos comentando los dos." },
+  { id:"diablo", name:"El diablo viste de Prada", img:"diablo.jpg", year:"2006", rating:"+7", match:"95",
+    genres:["Comedia","Moda"], accent:"linear-gradient(150deg,#1F3D5C,#0B1119)",
+    desc:"Nueva York, jefas imposibles y un armario que no cabe en casa. Tu comfort movie oficial." },
+  { id:"diablo2", name:"El diablo viste de Prada 2", img:"diablo2.jpg", year:"2026", rating:"+7", match:"96",
+    genres:["Comedia","Estreno"], accent:"linear-gradient(150deg,#6A2536,#12080C)",
+    desc:"La secuela que llevas esperando. Cuando salga, la vemos juntos: queda apuntado." },
+  { id:"harry", name:"Harry Potter", img:"harrypotter.jpg", year:"2001", rating:"+7", match:"94",
+    genres:["Fantasía","Saga"], accent:"linear-gradient(150deg,#2C4A2E,#0A0F0B)",
+    desc:"Maratón de sofá, manta y comentar cada escena aunque nos la sepamos de memoria." },
+  { id:"hambre", name:"Los Juegos del Hambre", img:"juegosdelhambre.jpg", year:"2012", rating:"+13", match:"93",
+    genres:["Acción","Distopía"], accent:"linear-gradient(150deg,#7A4A12,#140D06)",
+    desc:"Tensión de la buena. Tú aguantando y yo preguntando cada dos minutos quién es quién." },
+  { id:"madre", name:"Cómo conocí a vuestra madre", img:"comoconocivuestramadre.jpg", year:"2005", rating:"+13", match:"98",
+    genres:["Comedia","Serie"], accent:"linear-gradient(150deg,#1D5B63,#08181A)",
+    desc:"Nueve temporadas para contar una historia. La nuestra se cuenta más rápido y es mejor." },
+  { id:"delreves", name:"Del Revés", img:"delreves.jpg", year:"2015", rating:"TP", match:"99",
+    genres:["Animación","Familiar"], accent:"linear-gradient(150deg,#3A2A7A,#0C0A1A)",
+    desc:"Alegría, Tristeza y compañía. La peli para los días en los que hay que ordenar las emociones." },
+  { id:"internado", name:"El Internado", img:"elinternado.jpg", year:"2007", rating:"+16", match:"92",
+    genres:["Misterio","Serie"], accent:"linear-gradient(150deg,#2B2B2B,#0A0A0A)",
+    desc:"Bosque, secretos y un capítulo más que siempre se convierte en tres." }
+];
+
+/* Filas de la home. type: "normal" | "top10". prog = % de barra roja. */
+const NFX_ROWS = [
+  { title:"Seguir viendo con Carmen", items:[
+      {id:"nosotros", prog:0}, {id:"bridgerton", prog:74}, {id:"madre", prog:41}, {id:"internado", prog:12}
+  ]},
+  { title:"Top 10 · España hoy", type:"top10", items:[
+      {id:"nosotros"}, {id:"bridgerton"}, {id:"diablo"}, {id:"delreves"}, {id:"madre"},
+      {id:"hambre"}, {id:"harry"}, {id:"internado"}, {id:"diablo2"}
+  ]},
+  { title:"Porque te gustó Bridgerton", items:[
+      {id:"diablo"}, {id:"diablo2"}, {id:"internado"}, {id:"madre"}, {id:"harry"}
+  ]},
+  { title:"Para ver los dos en el sofá", items:[
+      {id:"delreves"}, {id:"harry"}, {id:"hambre"}, {id:"bridgerton"}, {id:"diablo"}
+  ]},
+  { title:"Volver a ver otra vez", items:[
+      {id:"madre"}, {id:"internado"}, {id:"delreves"}, {id:"hambre"}, {id:"diablo2"}
+  ]},
+  { title:"Solo en el perfil de Carmen", items:[
+      {id:"nosotros"}
+  ]}
+];
+
+const NFX_ALL = {};
+NFX_ALL[NFX_HERO.id] = NFX_HERO;
+NFX_TITLES.forEach(t => NFX_ALL[t.id] = t);
+
+let nfxTimers = [];
+let nfxHomeBuilt = false;
+let nfxToastTimer = null;
+
+/* ---------- utilidades ---------- */
+function nfxLater(fn, ms){ nfxTimers.push(setTimeout(fn, ms)); }
+function nfxClearTimers(){ nfxTimers.forEach(clearTimeout); nfxTimers = []; }
+
+function nfxStage(id){
+  document.querySelectorAll("#overlay-video .nfx-stage").forEach(s=>s.classList.remove("on"));
+  const el = document.getElementById(id);
+  if(el) el.classList.add("on");
+  const exit = document.getElementById("nfxExit");
+  exit.classList.toggle("on", id === "nfxLogin" || id === "nfxProfiles" || id === "nfxHome");
+}
+
+/* Pone la imagen si existe; si no, se queda el degradado + el título. */
+function nfxSetImage(box, src){
+  if(!src) return;
+  const img = document.createElement("img");
+  img.alt = "";
+  img.decoding = "async";
+  img.onload = ()=> box.classList.add("has-img");
+  img.onerror = ()=> img.remove();
+  img.src = src;
+  box.appendChild(img);
+}
+
+function nfxToast(msg){
+  const t = document.getElementById("nfxToast");
+  t.textContent = msg;
+  t.classList.add("on");
+  clearTimeout(nfxToastTimer);
+  nfxToastTimer = setTimeout(()=> t.classList.remove("on"), 2200);
+}
+
+/* ---------- 1. intro ---------- */
+function nfxRunIntro(){
+  const bars = document.getElementById("nfxBars");
+  const word = document.getElementById("nfxWord");
+  const glow = document.getElementById("nfxGlow");
+
+  bars.innerHTML = "";
+  word.innerHTML = "";
+  word.classList.remove("zoom");
+  glow.classList.remove("flash");
+
+  for(let i=0;i<9;i++){
+    const b = document.createElement("i");
+    b.style.animationDelay = (i*0.045) + "s";
+    bars.appendChild(b);
+  }
+  "NETFLIX".split("").forEach((ch,i)=>{
+    const b = document.createElement("b");
+    b.textContent = ch;
+    b.style.animationDelay = (0.45 + i*0.07) + "s";
+    word.appendChild(b);
+  });
+
+  if(NFX_MEDIA.tadum){
+    const ta = new Audio(NFX_MEDIA.tadum);
+    ta.volume = 0.75;
+    ta.play().catch(()=>{});
+  }
+
+  nfxLater(()=> glow.classList.add("flash"), 1500);
+  nfxLater(()=> word.classList.add("zoom"), 2050);
+  nfxLater(()=> nfxStage("nfxLogin"), 3000);
+}
+
+/* ---------- 2. login ---------- */
+function nfxSignIn(){
+  nfxClearTimers();
+  nfxBuildProfiles();
+  nfxStage("nfxProfiles");
+}
+
+/* ---------- 3. perfiles ---------- */
+function nfxBuildProfiles(){
+  const row = document.getElementById("nfxProfilesRow");
+  row.innerHTML = "";
+
+  const main = document.createElement("button");
+  main.className = "nfx-profile main";
+  main.innerHTML = `<span class="nfx-avatar">❤️</span><span class="nfx-profile-name">Carmen ❤️</span>`;
+  nfxSetImage(main.querySelector(".nfx-avatar"), NFX_MEDIA.avatarImg);
+  main.addEventListener("click", nfxEnterHome);
+  row.appendChild(main);
+
+  [["Nosotros","💞"], ["Invitados","👤"]].forEach(([name, icon])=>{
+    const p = document.createElement("button");
+    p.className = "nfx-profile dim";
+    p.innerHTML = `<span class="nfx-avatar">${icon}</span><span class="nfx-profile-name">${name}</span>`;
+    p.addEventListener("click", ()=>{
+      const t = document.getElementById("nfxProfileToast");
+      t.classList.add("on");
+      setTimeout(()=> t.classList.remove("on"), 1900);
+    });
+    row.appendChild(p);
+  });
+}
+
+/* ---------- 4. home ---------- */
+function nfxEnterHome(){
+  nfxClearTimers();
+  if(!nfxHomeBuilt){ nfxBuildHome(); nfxHomeBuilt = true; }
+  document.getElementById("nfxFeed").scrollTop = 0;
+  nfxStage("nfxHome");
+}
+
+function nfxBuildHome(){
+  /* hero */
+  nfxSetImage(document.getElementById("nfxHeroBg"), NFX_MEDIA.heroImg);
+  nfxSetImage(document.getElementById("nfxTopAvatar"), NFX_MEDIA.avatarImg);
+
+  const titleBox = document.getElementById("nfxHeroTitleBox");
+  titleBox.innerHTML = "";
+  if(NFX_MEDIA.heroLogo){
+    const logo = document.createElement("img");
+    logo.className = "nfx-hero-logo";
+    logo.src = NFX_MEDIA.heroLogo;
+    logo.alt = NFX_HERO.name;
+    logo.onerror = ()=>{ logo.remove(); titleBox.innerHTML = `<h2 class="nfx-hero-title">${NFX_HERO.name}</h2>`; };
+    titleBox.appendChild(logo);
+  } else {
+    titleBox.innerHTML = `<h2 class="nfx-hero-title">${NFX_HERO.name}</h2>`;
+  }
+
+  const tags = document.getElementById("nfxHeroTags");
+  tags.innerHTML = NFX_HERO.genres.map(g=>`<span>${g}</span>`).join(`<i>•</i>`);
+
+  /* filas */
+  const rowsBox = document.getElementById("nfxRows");
+  rowsBox.innerHTML = "";
+  NFX_ROWS.forEach(row=>{
+    const section = document.createElement("div");
+    section.className = "nfx-row";
+    section.innerHTML = `<div class="nfx-row-head"><h3>${row.title}</h3></div>`;
+
+    const rail = document.createElement("div");
+    rail.className = "nfx-rail" + (row.type === "top10" ? " top10" : "");
+
+    row.items.forEach((it, i)=>{
+      const data = NFX_ALL[it.id];
+      if(!data) return;
+      rail.appendChild(nfxCard(data, {
+        rank: row.type === "top10" ? i+1 : null,
+        prog: it.prog
+      }));
+    });
+
+    section.appendChild(rail);
+    rowsBox.appendChild(section);
+  });
+
+  /* la barra de arriba se vuelve negra al bajar */
+  const feed = document.getElementById("nfxFeed");
+  const top = document.getElementById("nfxTop");
+  feed.addEventListener("scroll", ()=>{
+    top.classList.toggle("scrolled", feed.scrollTop > 40);
+  });
+}
+
+function nfxCard(data, opts){
+  const card = document.createElement("button");
+  card.className = "nfx-card";
+
+  if(opts.rank){
+    const num = document.createElement("span");
+    num.className = "nfx-num";
+    num.textContent = opts.rank;
+    card.appendChild(num);
+  }
+
+  const poster = document.createElement("span");
+  poster.className = "nfx-poster";
+  poster.style.setProperty("--g", data.accent);
+  poster.innerHTML = `
+    ${data.playable ? `<span class="nfx-badge">Estreno</span>` : `<span class="nfx-lock">🔒</span>`}
+    <span class="nfx-poster-fallback">${data.name}</span>
+    ${typeof opts.prog === "number" && opts.prog > 0 ? `<span class="nfx-bar"><i style="width:${opts.prog}%"></i></span>` : ``}
+  `;
+  nfxSetImage(poster, data.img);
+  card.appendChild(poster);
+
+  card.addEventListener("click", ()=> nfxOpenSheet(data.id));
+  return card;
+}
+
+/* ---------- ficha inferior ---------- */
+function nfxOpenSheet(id){
+  const data = NFX_ALL[id];
+  if(!data) return;
+
+  const poster = document.getElementById("nfxSheetPoster");
+  poster.innerHTML = "";
+  poster.style.setProperty("--g", data.accent);
+  nfxSetImage(poster, data.img);
+
+  document.getElementById("nfxSheetTitle").textContent = data.name;
+  document.getElementById("nfxSheetMeta").innerHTML = `
+    <span class="nfx-match">${data.match}% para ti</span>
+    <span>${data.year}</span>
+    <span class="nfx-rating">${data.rating}</span>
+    <span>${data.genres.join(" · ")}</span>
+  `;
+  document.getElementById("nfxSheetDesc").textContent = data.desc;
+
+  const actions = document.getElementById("nfxSheetActions");
+  actions.innerHTML = "";
+  if(data.playable){
+    const play = document.createElement("button");
+    play.className = "nfx-play";
+    play.textContent = "▶ Reproducir";
+    play.addEventListener("click", ()=>{ nfxCloseSheet(); nfxOpenPlayer(); });
+    actions.appendChild(play);
+  } else {
+    const locked = document.createElement("button");
+    locked.className = "nfx-btn-ghost";
+    locked.textContent = "🔒 No disponible hoy";
+    locked.addEventListener("click", ()=>{
+      nfxCloseSheet();
+      nfxToast("Hoy solo se estrena una cosa 🎬");
+    });
+    actions.appendChild(locked);
+  }
+  const close = document.createElement("button");
+  close.className = "nfx-btn-ghost";
+  close.textContent = "Cerrar";
+  close.addEventListener("click", nfxCloseSheet);
+  actions.appendChild(close);
+
+  document.getElementById("nfxSheetBg").classList.add("on");
+  document.getElementById("nfxSheet").classList.add("on");
+}
+
+function nfxCloseSheet(){
+  document.getElementById("nfxSheetBg").classList.remove("on");
+  document.getElementById("nfxSheet").classList.remove("on");
+}
+
+/* ---------- 5. reproductor ---------- */
+function nfxOpenPlayer(){
+  document.getElementById("nfxPlayerName").textContent = NFX_HERO.name;
+  nfxStage("nfxPlayer");
+  loadVideo();
+}
+
+function nfxClosePlayer(){
+  stopVideo();
+  nfxStage("nfxHome");
+}
+
+function loadVideo(){
+  const video = document.getElementById("videoFrame");
+  if(VIDEO_SRC){
+    if(video.getAttribute("src") !== VIDEO_SRC) video.src = VIDEO_SRC;
+    video.play().catch(()=>{});
+  }
+}
+function stopVideo(){
+  const video = document.getElementById("videoFrame");
+  video.pause();
+  video.removeAttribute("src");
+  video.load();
+}
+
+/* ---------- entrada / salida del regalo ---------- */
+function nfxStart(){
+  nfxClearTimers();
+  nfxCloseSheet();
+  document.getElementById("nfxEmail").value = NFX_MEDIA.email;
+  nfxStage("nfxIntro");
+  nfxRunIntro();
+}
+
+function nfxStop(){
+  nfxClearTimers();
+  stopVideo();
+  nfxCloseSheet();
+  nfxStage("nfxIntro");
+}
+
+/* ---------- visor de fotos ---------- */
+let lbIndex = 0;
+
+function openLightbox(i){
+  lbIndex = i;
+  lbRender();
+  document.getElementById("lightbox").classList.add("active");
+}
+
+function lbRender(){
+  const img = document.getElementById("lightboxImg");
+  img.classList.add("swap");
+  setTimeout(()=>{
+    img.src = PHOTOS[lbIndex] || "";
+    img.classList.remove("swap");
+  }, 140);
+  const count = document.getElementById("lbCount");
+  if(count) count.textContent = (lbIndex+1) + " / " + PHOTOS.length;
+  const bar = document.querySelector(".lb-bar");
+  if(bar) bar.style.visibility = PHOTOS.length > 1 ? "visible" : "hidden";
+}
+
+function lbStep(dir){
+  if(PHOTOS.length < 2) return;
+  lbIndex = (lbIndex + dir + PHOTOS.length) % PHOTOS.length;
+  lbRender();
+}
+
+function lbBackdrop(e){
+  if(e.target && e.target.id === "lightbox") closeLightbox();
+}
+
+function closeLightbox(){
+  document.getElementById("lightbox").classList.remove("active");
+}
+
+(function(){
+  const lb = document.getElementById("lightbox");
+  let x0 = null;
+  lb.addEventListener("touchstart", e=>{ x0 = e.touches[0].clientX; }, {passive:true});
+  lb.addEventListener("touchend", e=>{
+    if(x0 === null) return;
+    const dx = e.changedTouches[0].clientX - x0;
+    if(Math.abs(dx) > 45) lbStep(dx < 0 ? 1 : -1);
+    x0 = null;
+  }, {passive:true});
+  document.addEventListener("keydown", e=>{
+    if(!lb.classList.contains("active")) return;
+    if(e.key === "ArrowRight") lbStep(1);
+    else if(e.key === "ArrowLeft") lbStep(-1);
+    else if(e.key === "Escape") closeLightbox();
+  });
+})();
+
+/* floating hearts background */
+const floaters = document.getElementById("floaters");
+for(let i=0;i<14;i++){
+  const s = document.createElement("span");
+  s.textContent = "♥";
+  s.style.left = Math.random()*100 + "%";
+  s.style.fontSize = (12 + Math.random()*14) + "px";
+  s.style.animationDuration = (9 + Math.random()*8) + "s";
+  s.style.animationDelay = (Math.random()*10) + "s";
+  floaters.appendChild(s);
+}
+
+/* ===================== JUEGO: MEMORIA DE PINGÜINOS ===================== */
+const PENGUIN_EMOJIS = ["🐧","💙","❄️","🎁","💌","⭐"];
+let pgCards = [];
+let pgFlipped = [];
+let pgMatched = 0;
+let pgLocked = false;
+let pgTimer = null;
+let pgTimeLeft = 45;
+
+function goToGame(){
+  showScene("scene-game");
+  startGame();
+}
+
+function shuffle(arr){
+  for(let i=arr.length-1;i>0;i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [arr[i],arr[j]] = [arr[j],arr[i]];
+  }
+  return arr;
+}
+
+function startGame(){
+  clearInterval(pgTimer);
+  document.getElementById("gameResult").classList.remove("active");
+  pgFlipped = [];
+  pgMatched = 0;
+  pgLocked = false;
+  pgTimeLeft = 45;
+  document.getElementById("gameTimer").textContent = pgTimeLeft;
+
+  pgCards = shuffle([...PENGUIN_EMOJIS, ...PENGUIN_EMOJIS]);
+  const grid = document.getElementById("pengrid");
+  grid.innerHTML = "";
+  pgCards.forEach((emoji, i)=>{
+    const card = document.createElement("div");
+    card.className = "pcard";
+    card.dataset.index = i;
+    card.dataset.value = emoji;
+    card.innerHTML = `
+      <div class="pcard-inner">
+        <div class="pface pfront">🐧</div>
+        <div class="pface pback">${emoji}</div>
+      </div>`;
+    card.addEventListener("click", ()=>flipCard(card));
+    grid.appendChild(card);
+  });
+
+  pgTimer = setInterval(()=>{
+    pgTimeLeft--;
+    document.getElementById("gameTimer").textContent = pgTimeLeft;
+    if(pgTimeLeft<=0){
+      clearInterval(pgTimer);
+      loseGame();
+    }
+  }, 1000);
+}
+
+function flipCard(card){
+  if(pgLocked) return;
+  if(card.classList.contains("flipped") || card.classList.contains("matched")) return;
+  card.classList.add("flipped");
+  pgFlipped.push(card);
+
+  if(pgFlipped.length === 2){
+    pgLocked = true;
+    const [a,b] = pgFlipped;
+    if(a.dataset.value === b.dataset.value){
+      a.classList.add("matched");
+      b.classList.add("matched");
+      pgMatched++;
+      pgFlipped = [];
+      pgLocked = false;
+      if(pgMatched === PENGUIN_EMOJIS.length){
+        clearInterval(pgTimer);
+        winGame();
+      }
+    } else {
+      setTimeout(()=>{
+        a.classList.remove("flipped");
+        b.classList.remove("flipped");
+        pgFlipped = [];
+        pgLocked = false;
+      }, 800);
+    }
+  }
+}
+
+function winGame(){
+  document.getElementById("gameResultTitle").textContent = "¡Feliciades Carmeeen!!!";
+  document.getElementById("gameResultMsg").textContent = "Has encontrado todas las parejas ❤️";
+  document.getElementById("gameRetryBtn").style.display = "none";
+  document.getElementById("gameContinueBtn").style.display = "inline-block";
+  document.getElementById("gameResult").classList.add("active");
+}
+
+function loseGame(){
+  document.getElementById("gameResultTitle").textContent = "¡Se derritió el hielo!";
+  document.getElementById("gameResultMsg").textContent = "Pensaba que eras mejor a los juegos";
+  document.getElementById("gameRetryBtn").style.display = "inline-block";
+  document.getElementById("gameContinueBtn").style.display = "none";
+  document.getElementById("gameResult").classList.add("active");
+}
+
+/* ===================== ADIVINANZAS DE LOS REGALOS ===================== */
+const RIDDLES = [
+  {
+    poem: "Nacieron en la tierra, no en una tienda,\nno duran mucho y por eso valen tanto;\nhoy vienen a acompañar a todo lo demás\ny a decir en alto lo que a veces me callo.",
+    correct: "Flores",
+    distractors: ["Perfume","Tecnología"]
+  },
+  {
+    poem: "Cierta princesa encerrada en su torre\nno habría sobrevivido a su propia leyenda sin esto;\nlo usaba cada día para que nada se enredara\ny para que el viento no le ganara la batalla.",
+    correct: "Accesorio de pelo",
+    distractors: ["Zapatos","Comida"]
+  },
+  {
+    poem: "Ya te sabes el final y aun así vas a querer empezar otra vez;\nlo que antes caía temporada tras temporada\nahora llega sin pantalla y sin prisa,\ny solo avanza cuando tú quieres.",
+    correct: "Libro",
+    distractors: ["Ropa","Perfume"]
+  },
+  {
+    poem: "Su título deja una duda en el aire,\nun 'a lo mejor' que nunca acaba de cerrarse;\ncontigo, en cambio, la respuesta siempre fue sí.\nSe disfruta despacio y va donde vayas tú.",
+    correct: "Libro",
+    distractors: ["Tecnología","Maquillaje"]
+  },
+  {
+    poem: "La arena se cuela donde nadie la invita\ny el sol tampoco pide permiso;\nesto se pone en medio, sin llamar la atención,\npara que lo que más te gusta vuelva intacto.",
+    correct: "Accesorio",
+    distractors: ["Comida","Bisutería"]
+  },
+  {
+    poem: "Tu padre juraba que en casa ya había uno igual,\npero tú lo querías tuyo y de nadie más;\ntiene su hueco en la estantería\ny solo cobra sentido cuando alguien lo pone en marcha.",
+    correct: "Música",
+    distractors: ["Ropa","Decoración"]
+  },
+  {
+    poem: "El último es el más pequeño de los siete\ny, aun así, el que más dice;\nno abulta, casi no se nota,\ny va a estar muy cerca de ti todos los días.",
+    correct: "Joyería",
+    distractors: ["Zapatos","Tecnología"]
+  }
+];
+const ORDINALS = ["primer","segundo","tercer","cuarto","quinto","sexto","séptimo"];
+
+let riddleIndex = 0;
+let riddleObtained = [false,false,false,false,false,false,false];
+
+function goToRiddles(){
+  showScene("scene-riddles");
+  riddleObtained = [false,false,false,false,false,false,false];
+  showRiddleMenu();
+}
+
+function showRiddleMenu(){
+  document.getElementById("riddleActiveView").style.display = "none";
+  document.getElementById("riddleMenuView").style.display = "block";
+
+  const nextIndex = riddleObtained.indexOf(false);
+  const done = riddleObtained.filter(Boolean).length;
+
+  const prog = document.getElementById("riddleProgress");
+  prog.innerHTML = "";
+  RIDDLES.forEach((r,i)=>{
+    const seg = document.createElement("i");
+    if(riddleObtained[i]) seg.className = "on";
+    prog.appendChild(seg);
+  });
+  document.getElementById("riddleProgressTxt").textContent =
+    done + " de " + RIDDLES.length + (done === 1 ? " conseguido" : " conseguidos");
+
+  const row = document.getElementById("riddleMenuRow");
+  row.innerHTML = "";
+  RIDDLES.forEach((r,i)=>{
+    const item = document.createElement("div");
+    item.className = "riddle-menu-item";
+    item.style.setProperty("--i", i);
+
+    const icon = document.createElement("div");
+    let state = "locked";
+    let symbol = "🔒";
+    if(riddleObtained[i]){ state = "done"; symbol = "✅"; }
+    else if(i === nextIndex){ state = "current"; symbol = "🎁"; item.classList.add("is-current"); }
+    icon.className = "riddle-menu-icon " + state;
+    icon.textContent = symbol;
+    if(state === "current"){
+      icon.addEventListener("click", ()=> openRiddle(i));
+    }
+
+    const label = document.createElement("div");
+    label.className = "riddle-menu-label";
+    label.textContent = "Regalo " + (i+1);
+
+    item.appendChild(icon);
+    item.appendChild(label);
+    if(state === "current"){
+      const tap = document.createElement("div");
+      tap.className = "riddle-tap";
+      tap.textContent = "toca aquí";
+      item.appendChild(tap);
+    }
+    row.appendChild(item);
+  });
+}
+
+function openRiddle(i){
+  riddleIndex = i;
+  document.getElementById("riddleMenuView").style.display = "none";
+  document.getElementById("riddleActiveView").style.display = "block";
+
+  const r = RIDDLES[i];
+  const card = document.getElementById("riddleCard");
+  card.classList.remove("shake");
+  document.getElementById("riddleCounter").textContent = `Regalo ${i+1} de ${RIDDLES.length}`;
+
+  const poem = document.getElementById("riddlePoem");
+  poem.innerHTML = "";
+  r.poem.split("\n").forEach((line, k)=>{
+    const div = document.createElement("div");
+    div.className = "riddle-line";
+    div.style.setProperty("--i", k);
+    div.textContent = line;
+    poem.appendChild(div);
+  });
+
+  const msgEl = document.getElementById("riddleMsg");
+  msgEl.textContent = "\u00A0";
+  msgEl.className = "riddle-msg";
+  document.getElementById("riddleNextBtn").style.display = "none";
+
+  const options = shuffle([
+    {text:r.correct, ok:true},
+    {text:r.distractors[0], ok:false},
+    {text:r.distractors[1], ok:false}
+  ]);
+  const keys = ["A","B","C"];
+  const optsEl = document.getElementById("riddleOptions");
+  optsEl.innerHTML = "";
+  optsEl.style.display = "flex";
+  options.forEach((opt,k)=>{
+    const btn = document.createElement("button");
+    btn.className = "riddle-option-btn";
+    btn.setAttribute("data-key", keys[k] || "•");
+    btn.textContent = opt.text;
+    btn.addEventListener("click", ()=> chooseOption(btn, opt.ok));
+    optsEl.appendChild(btn);
+  });
+}
+
+function nextRiddle(){
+  if(riddleObtained.every(v=>v)){
+    showScene("scene-finalmsg");
+    stopMusicForGood();
+  } else {
+    showRiddleMenu();
+  }
+}
+
+function chooseOption(btn, isCorrect){
+  const optsEl = document.getElementById("riddleOptions");
+  const msgEl = document.getElementById("riddleMsg");
+  const card = document.getElementById("riddleCard");
+
+  if(isCorrect){
+    Array.from(optsEl.children).forEach(b=> b.classList.add("disabled"));
+    btn.classList.add("correct");
+    riddleObtained[riddleIndex] = true;
+    heartBurst(document.getElementById("riddleBurst"), 18);
+
+    const isLast = riddleObtained.every(v=>v);
+    msgEl.textContent = `Ya puedes coger tu ${ORDINALS[riddleIndex]} regalo`;
+    msgEl.className = "riddle-msg right";
+    const next = document.getElementById("riddleNextBtn");
+    next.style.display = "inline-block";
+    next.textContent = isLast ? "Ver mensaje final" : "Volver a los regalos";
+  } else {
+    btn.classList.add("wrong");
+    btn.classList.add("disabled");
+    card.classList.remove("shake");
+    void card.offsetWidth;
+    card.classList.add("shake");
+    msgEl.textContent = "Estuviste cerca";
+    msgEl.className = "riddle-msg wrong";
+  }
+}
+</script>
+</body>
+</html>
