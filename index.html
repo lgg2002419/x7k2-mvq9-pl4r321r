@@ -807,11 +807,13 @@
   }
   .nfx-player-name{ font-size:14px; font-weight:600; color:#fff; }
   .nfx-video-box{
-    width:100%; min-height:52vw; background:#000;
+    width:100%; flex:1; min-height:0; background:#000;
     display:flex; align-items:center; justify-content:center;
+    overflow:hidden;
   }
   .nfx-video-box video{
-    width:100%; height:auto; max-height:100vh;
+    width:100%; height:100%;
+    object-fit:contain;
     display:block; background:#000;
   }
   .nfx-player-hint{
