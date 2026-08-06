@@ -809,12 +809,20 @@
   .nfx-video-box{
     width:100%; flex:1; min-height:0; background:#000;
     display:flex; align-items:center; justify-content:center;
-    overflow:hidden;
+    overflow:hidden; position:relative;
   }
   .nfx-video-box video{
     width:100%; height:100%;
-    object-fit:cover;
+    object-fit:contain;
     display:block; background:#000;
+  }
+  .nfx-fullscreen-btn{
+    position:absolute; z-index:6;
+    bottom:calc(20px + env(safe-area-inset-bottom)); right:14px;
+    width:38px; height:38px; border-radius:50%;
+    border:1px solid rgba(255,255,255,.24); background:rgba(0,0,0,.5);
+    color:#fff; font-size:16px; cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
   }
   .nfx-player-hint{
     position:absolute; bottom:calc(18px + env(safe-area-inset-bottom)); left:0; right:0;
@@ -1364,6 +1372,7 @@
       </div>
       <div class="nfx-video-box">
         <video id="videoFrame" controls playsinline preload="metadata"></video>
+        <button class="nfx-fullscreen-btn" onclick="nfxToggleFullscreen()" aria-label="Pantalla completa">⛶</button>
       </div>
       <div class="nfx-player-hint">Toca ← para volver al inicio</div>
     </div>
@@ -2030,6 +2039,20 @@ function stopVideo(){
   video.pause();
   video.removeAttribute("src");
   video.load();
+}
+function nfxToggleFullscreen(){
+  const video = document.getElementById("videoFrame");
+  // iPhone / Safari: usa el fullscreen nativo del propio <video>
+  if (video.webkitEnterFullscreen) {
+    video.webkitEnterFullscreen();
+    return;
+  }
+  // resto de navegadores (Android, escritorio): API estándar
+  if (video.requestFullscreen) {
+    video.requestFullscreen();
+  } else if (video.webkitRequestFullscreen) {
+    video.webkitRequestFullscreen();
+  }
 }
 
 /* ---------- entrada / salida del regalo ---------- */
